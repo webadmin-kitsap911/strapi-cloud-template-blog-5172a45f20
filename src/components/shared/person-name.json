@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_shared_person_names",
+  "info": {
+    "displayName": "Person Name",
+    "description": "Simple name entry",
+    "icon": "user"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

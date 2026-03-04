@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_shared_incidents",
+  "info": {
+    "displayName": "Incident",
+    "description": "Incident details for public records request",
+    "icon": "exclamation-triangle"
+  },
+  "options": {},
+  "attributes": {
+    "dateTime": {
+      "type": "datetime"
+    },
+    "location": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

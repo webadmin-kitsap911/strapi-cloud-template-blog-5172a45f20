@@ -1,0 +1,76 @@
+{
+  "kind": "collectionType",
+  "collectionName": "public_records_requests",
+  "info": {
+    "singularName": "public-records-request",
+    "pluralName": "public-records-requests",
+    "displayName": "Public Records Request",
+    "description": "Public records request submissions"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "isMemberAgency": {
+      "type": "boolean",
+      "default": false
+    },
+    "submittorName": {
+      "type": "string",
+      "required": true
+    },
+    "submittorEmail": {
+      "type": "email",
+      "required": true
+    },
+    "submittorPhone": {
+      "type": "string"
+    },
+    "submittorMailingAddress": {
+      "type": "text"
+    },
+    "requestDate": {
+      "type": "date",
+      "required": true
+    },
+    "incidents": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.incident"
+    },
+    "callerNames": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.person-name"
+    },
+    "agencyCaseId": {
+      "type": "string"
+    },
+    "officers": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.officer"
+    },
+    "suspectNames": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.person-name"
+    },
+    "otherInformation": {
+      "type": "text"
+    },
+    "neededForCourt": {
+      "type": "boolean",
+      "default": false
+    },
+    "courtDeadline": {
+      "type": "date"
+    },
+    "feeAcknowledgement": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    }
+  }
+}
