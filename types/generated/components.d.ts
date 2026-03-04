@@ -1,5 +1,32 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface SharedDocumentAttachment extends Struct.ComponentSchema {
+  collectionName: 'components_shared_document_attachments';
+  info: {
+    description: 'Document with title and posted date';
+    displayName: 'Document Attachment';
+  };
+  attributes: {
+    file: Schema.Attribute.Integer &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'plugin::private-file-upload.private-file'>;
+    postedDate: Schema.Attribute.Date &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Date used for sorting documents';
+        };
+      }>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Display name for the document';
+        };
+      }>;
+  };
+}
+
 export interface SharedIncident extends Struct.ComponentSchema {
   collectionName: 'components_shared_incidents';
   info: {
@@ -104,6 +131,7 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'shared.document-attachment': SharedDocumentAttachment;
       'shared.incident': SharedIncident;
       'shared.media': SharedMedia;
       'shared.officer': SharedOfficer;

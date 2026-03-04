@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "meeting_groups",
+  "info": {
+    "singularName": "meeting-group",
+    "pluralName": "meeting-groups",
+    "displayName": "Meeting Group",
+    "description": "Groups that hold public meetings (e.g., Board of Directors, Technical Committee)"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "publicMeetings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::public-meeting.public-meeting",
+      "mappedBy": "group"
+    }
+  }
+}

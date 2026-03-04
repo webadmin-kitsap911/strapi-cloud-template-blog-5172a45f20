@@ -1,9 +1,11 @@
 {
-  "name": "my-app-name",
+  "name": "kitsap-911-cms-2026",
   "version": "0.1.0",
   "private": true,
-  "description": "A Strapi application",
+  "description": "A Strapi application to power the Kitsap 911 website",
   "scripts": {
+    "postinstall": "cd src/plugins/private-file-upload && npm install",
+    "prebuild": "cd src/plugins/private-file-upload && npm run build",
     "build": "strapi build",
     "deploy": "strapi deploy",
     "develop": "strapi develop",
@@ -13,9 +15,9 @@
   },
   "dependencies": {
     "@_sh/strapi-plugin-ckeditor": "^7.0.0",
-    "@strapi/plugin-cloud": "5.34.0",
-    "@strapi/plugin-users-permissions": "5.34.0",
-    "@strapi/strapi": "5.34.0",
+    "@strapi/plugin-cloud": "5.38.0",
+    "@strapi/plugin-users-permissions": "5.38.0",
+    "@strapi/strapi": "5.38.0",
     "better-sqlite3": "11.3.0",
     "fs-extra": "^10.0.0",
     "mime-types": "^2.1.27",

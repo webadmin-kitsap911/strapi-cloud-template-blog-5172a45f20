@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_shared_document_attachments",
+  "info": {
+    "displayName": "Document Attachment",
+    "description": "Document with title and posted date"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Display name for the document"
+        }
+      }
+    },
+    "postedDate": {
+      "type": "date",
+      "required": true,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Date used for sorting documents"
+        }
+      }
+    },
+    "file": {
+      "type": "customField",
+      "customField": "plugin::private-file-upload.private-file",
+      "required": true
+    }
+  }
+}

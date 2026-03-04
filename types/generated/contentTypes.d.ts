@@ -628,6 +628,81 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiMeetingGroupMeetingGroup
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'meeting_groups';
+  info: {
+    description: 'Groups that hold public meetings (e.g., Board of Directors, Technical Committee)';
+    displayName: 'Meeting Group';
+    pluralName: 'meeting-groups';
+    singularName: 'meeting-group';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::meeting-group.meeting-group'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    publicMeetings: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::public-meeting.public-meeting'
+    >;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPublicMeetingPublicMeeting
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'public_meetings';
+  info: {
+    description: 'Scheduled public meetings';
+    displayName: 'Public Meeting';
+    pluralName: 'public-meetings';
+    singularName: 'public-meeting';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    date: Schema.Attribute.Date & Schema.Attribute.Required;
+    description: Schema.Attribute.Text;
+    documents: Schema.Attribute.Component<'shared.document-attachment', true>;
+    group: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::meeting-group.meeting-group'
+    >;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::public-meeting.public-meeting'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    timeEnd: Schema.Attribute.Time;
+    timeStart: Schema.Attribute.Time;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiPublicRecordsRequestPublicRecordsRequest
   extends Struct.CollectionTypeSchema {
   collectionName: 'public_records_requests';
@@ -939,6 +1014,7 @@ export interface PluginUploadFile extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     ext: Schema.Attribute.String;
+    focalPoint: Schema.Attribute.JSON;
     folder: Schema.Attribute.Relation<'manyToOne', 'plugin::upload.folder'> &
       Schema.Attribute.Private;
     folderPath: Schema.Attribute.String &
@@ -1192,6 +1268,8 @@ declare module '@strapi/strapi' {
       'api::category.category': ApiCategoryCategory;
       'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
       'api::global.global': ApiGlobalGlobal;
+      'api::meeting-group.meeting-group': ApiMeetingGroupMeetingGroup;
+      'api::public-meeting.public-meeting': ApiPublicMeetingPublicMeeting;
       'api::public-records-request.public-records-request': ApiPublicRecordsRequestPublicRecordsRequest;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

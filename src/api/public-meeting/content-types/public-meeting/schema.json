@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "public_meetings",
+  "info": {
+    "singularName": "public-meeting",
+    "pluralName": "public-meetings",
+    "displayName": "Public Meeting",
+    "description": "Scheduled public meetings"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "timeStart": {
+      "type": "time"
+    },
+    "timeEnd": {
+      "type": "time"
+    },
+    "description": {
+      "type": "text"
+    },
+    "group": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::meeting-group.meeting-group",
+      "inversedBy": "publicMeetings"
+    },
+    "documents": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.document-attachment"
+    }
+  }
+}
