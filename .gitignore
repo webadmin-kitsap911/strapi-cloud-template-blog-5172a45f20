@@ -131,3 +131,10 @@ build
 .strapi-cloud.json
 
 .envrc
+
+############################
+# Claude
+############################
+
+.claude/
+CLAUDE.md
