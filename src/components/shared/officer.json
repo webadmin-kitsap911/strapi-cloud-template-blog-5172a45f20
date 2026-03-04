@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_shared_officers",
+  "info": {
+    "displayName": "Officer",
+    "description": "Officer details for public records request",
+    "icon": "user-shield"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "idNumber": {
+      "type": "string"
+    }
+  }
+}

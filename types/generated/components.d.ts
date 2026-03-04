@@ -1,5 +1,19 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface SharedIncident extends Struct.ComponentSchema {
+  collectionName: 'components_shared_incidents';
+  info: {
+    description: 'Incident details for public records request';
+    displayName: 'Incident';
+    icon: 'exclamation-triangle';
+  };
+  attributes: {
+    dateTime: Schema.Attribute.DateTime;
+    description: Schema.Attribute.Text;
+    location: Schema.Attribute.String;
+  };
+}
+
 export interface SharedMedia extends Struct.ComponentSchema {
   collectionName: 'components_shared_media';
   info: {
@@ -8,6 +22,31 @@ export interface SharedMedia extends Struct.ComponentSchema {
   };
   attributes: {
     file: Schema.Attribute.Media<'images' | 'files' | 'videos'>;
+  };
+}
+
+export interface SharedOfficer extends Struct.ComponentSchema {
+  collectionName: 'components_shared_officers';
+  info: {
+    description: 'Officer details for public records request';
+    displayName: 'Officer';
+    icon: 'user-shield';
+  };
+  attributes: {
+    idNumber: Schema.Attribute.String;
+    name: Schema.Attribute.String;
+  };
+}
+
+export interface SharedPersonName extends Struct.ComponentSchema {
+  collectionName: 'components_shared_person_names';
+  info: {
+    description: 'Simple name entry';
+    displayName: 'Person Name';
+    icon: 'user';
+  };
+  attributes: {
+    name: Schema.Attribute.String;
   };
 }
 
@@ -65,7 +104,10 @@ export interface SharedSlider extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'shared.incident': SharedIncident;
       'shared.media': SharedMedia;
+      'shared.officer': SharedOfficer;
+      'shared.person-name': SharedPersonName;
       'shared.quote': SharedQuote;
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;

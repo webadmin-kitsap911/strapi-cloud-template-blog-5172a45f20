@@ -563,6 +563,39 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiContactSubmissionContactSubmission
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'contact_submissions';
+  info: {
+    description: 'Submissions from the contact form';
+    displayName: 'Contact Submission';
+    pluralName: 'contact-submissions';
+    singularName: 'contact-submission';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contact-submission.contact-submission'
+    > &
+      Schema.Attribute.Private;
+    message: Schema.Attribute.Text & Schema.Attribute.Required;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    subject: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -589,6 +622,54 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
     publishedAt: Schema.Attribute.DateTime;
     siteDescription: Schema.Attribute.Text & Schema.Attribute.Required;
     siteName: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiPublicRecordsRequestPublicRecordsRequest
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'public_records_requests';
+  info: {
+    description: 'Public records request submissions';
+    displayName: 'Public Records Request';
+    pluralName: 'public-records-requests';
+    singularName: 'public-records-request';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    agencyCaseId: Schema.Attribute.String;
+    callerNames: Schema.Attribute.Component<'shared.person-name', true>;
+    courtDeadline: Schema.Attribute.Date;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    feeAcknowledgement: Schema.Attribute.Boolean &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<false>;
+    incidents: Schema.Attribute.Component<'shared.incident', true>;
+    isMemberAgency: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::public-records-request.public-records-request'
+    > &
+      Schema.Attribute.Private;
+    neededForCourt: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    officers: Schema.Attribute.Component<'shared.officer', true>;
+    otherInformation: Schema.Attribute.Text;
+    publishedAt: Schema.Attribute.DateTime;
+    requestDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    submittorEmail: Schema.Attribute.Email & Schema.Attribute.Required;
+    submittorMailingAddress: Schema.Attribute.Text;
+    submittorName: Schema.Attribute.String & Schema.Attribute.Required;
+    submittorPhone: Schema.Attribute.String;
+    suspectNames: Schema.Attribute.Component<'shared.person-name', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1109,7 +1190,9 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
+      'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
       'api::global.global': ApiGlobalGlobal;
+      'api::public-records-request.public-records-request': ApiPublicRecordsRequestPublicRecordsRequest;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
