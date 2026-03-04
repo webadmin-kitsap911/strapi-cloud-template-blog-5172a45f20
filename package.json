@@ -4,8 +4,6 @@
   "private": true,
   "description": "A Strapi application to power the Kitsap 911 website",
   "scripts": {
-    "postinstall": "cd src/plugins/private-file-upload && npm install",
-    "prebuild": "cd src/plugins/private-file-upload && npm run build",
     "build": "strapi build",
     "deploy": "strapi deploy",
     "develop": "strapi develop",
@@ -14,6 +12,7 @@
     "strapi": "strapi"
   },
   "dependencies": {
+    "@kitsap-911/strapi-private-file-upload": "github:kitsap-911/strapi-private-file-upload",
     "@_sh/strapi-plugin-ckeditor": "^7.0.0",
     "@strapi/plugin-cloud": "5.38.0",
     "@strapi/plugin-users-permissions": "5.38.0",

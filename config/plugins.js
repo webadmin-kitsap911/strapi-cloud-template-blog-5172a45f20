@@ -1,6 +1,6 @@
 module.exports = () => ({
   'private-file-upload': {
     enabled: true,
-    resolve: './src/plugins/private-file-upload',
+    resolve: '@kitsap-911/strapi-private-file-upload',
   },
 });
