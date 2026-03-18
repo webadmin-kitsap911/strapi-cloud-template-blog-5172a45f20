@@ -500,6 +500,62 @@ export interface ApiMeetingGroupMeetingGroup
   };
 }
 
+export interface ApiPagePage extends Struct.CollectionTypeSchema {
+  collectionName: 'pages';
+  info: {
+    description: 'Hierarchical pages with flexible content blocks';
+    displayName: 'Page';
+    pluralName: 'pages';
+    singularName: 'page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    children: Schema.Attribute.Relation<'oneToMany', 'api::page.page'> &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          visible: false;
+        };
+      }>;
+    contentBlocks: Schema.Attribute.DynamicZone<
+      [
+        'blocks.rich-text',
+        'blocks.image',
+        'blocks.heading',
+        'blocks.call-to-action',
+        'blocks.embed',
+        'blocks.press-releases',
+        'blocks.public-meetings',
+        'blocks.group-members',
+        'blocks.public-records-request-form',
+        'blocks.contact-form',
+      ]
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::page.page'> &
+      Schema.Attribute.Private;
+    parent: Schema.Attribute.Relation<'manyToOne', 'api::page.page'>;
+    path: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          visible: false;
+        };
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    seoDescription: Schema.Attribute.Text;
+    seoTitle: Schema.Attribute.String;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiPressReleasePressRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'press_releases';
@@ -1203,6 +1259,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
       'api::meeting-group.meeting-group': ApiMeetingGroupMeetingGroup;
+      'api::page.page': ApiPagePage;
       'api::press-release.press-release': ApiPressReleasePressRelease;
       'api::public-meeting.public-meeting': ApiPublicMeetingPublicMeeting;
       'api::public-records-request.public-records-request': ApiPublicRecordsRequestPublicRecordsRequest;

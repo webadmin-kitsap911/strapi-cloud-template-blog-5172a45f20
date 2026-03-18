@@ -34,6 +34,25 @@
           "description": "URL anchor for linking directly to this section (e.g., 'contact-us')"
         }
       }
+    },
+    "theme": {
+      "type": "enumeration",
+      "enum": [
+        "none",
+        "standard",
+        "darker",
+        "brighter",
+        "force-light:standard",
+        "force-light:darker",
+        "force-light:brighter",
+        "force-dark:standard",
+        "force-dark:darker",
+        "force-dark:brighter",
+        "invert:standard",
+        "invert:darker",
+        "invert:brighter"
+      ],
+      "default": "none"
     }
   }
 }
