@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_blocks_public_records_request_forms",
+  "info": {
+    "displayName": "Public Records Request Form",
+    "description": "Form for submitting public records requests",
+    "icon": "file-alt"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Public Records Request"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

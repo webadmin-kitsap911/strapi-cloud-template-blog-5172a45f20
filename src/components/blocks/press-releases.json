@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_blocks_press_releases",
+  "info": {
+    "displayName": "Press Releases",
+    "description": "Display a list of recent press releases",
+    "icon": "newspaper"
+  },
+  "options": {},
+  "attributes": {
+    "limit": {
+      "type": "integer",
+      "min": 1,
+      "max": 50,
+      "default": 10,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Maximum number of press releases to show"
+        }
+      }
+    }
+  }
+}

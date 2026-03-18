@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_blocks_public_meetings",
+  "info": {
+    "displayName": "Public Meetings",
+    "description": "Display upcoming and past public meetings",
+    "icon": "calendar"
+  },
+  "options": {},
+  "attributes": {
+    "limit": {
+      "type": "integer",
+      "min": 1,
+      "max": 50,
+      "default": 10,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Maximum number of meetings to show"
+        }
+      }
+    },
+    "showPast": {
+      "type": "boolean",
+      "default": false,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Include past meetings in the list"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "collectionName": "components_blocks_call_to_actions",
+  "info": {
+    "displayName": "Call to Action",
+    "description": "Highlighted section with a button to drive user action",
+    "icon": "bullhorn"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Main headline for the CTA"
+        }
+      }
+    },
+    "text": {
+      "type": "text",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Supporting text below the heading"
+        }
+      }
+    },
+    "buttonText": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Text displayed on the button"
+        }
+      }
+    },
+    "buttonUrl": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "URL the button links to (e.g., /contact or https://example.com)"
+        }
+      }
+    },
+    "style": {
+      "type": "enumeration",
+      "enum": ["primary", "secondary", "outline"],
+      "default": "primary",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Button style: primary (filled), secondary (muted), outline (bordered)"
+        }
+      }
+    }
+  }
+}

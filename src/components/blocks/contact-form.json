@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_blocks_contact_forms",
+  "info": {
+    "displayName": "Contact Form",
+    "description": "General contact form",
+    "icon": "envelope"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Contact Us"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

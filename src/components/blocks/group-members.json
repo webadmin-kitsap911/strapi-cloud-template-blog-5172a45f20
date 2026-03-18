@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_blocks_group_members",
+  "info": {
+    "displayName": "Group Members",
+    "description": "Display a grid of staff members or team members",
+    "icon": "users"
+  },
+  "options": {},
+  "attributes": {
+    "limit": {
+      "type": "integer",
+      "min": 1,
+      "max": 100,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Maximum number of members to show (leave empty for all)"
+        }
+      }
+    },
+    "filterByTag": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::staff-tag.staff-tag",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Only show members with this tag (e.g., 'Board', 'Leadership')"
+        }
+      }
+    }
+  }
+}

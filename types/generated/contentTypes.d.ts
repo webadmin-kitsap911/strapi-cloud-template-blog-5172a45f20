@@ -500,6 +500,44 @@ export interface ApiMeetingGroupMeetingGroup
   };
 }
 
+export interface ApiPressReleasePressRelease
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'press_releases';
+  info: {
+    description: 'Press releases and news announcements';
+    displayName: 'Press Release';
+    pluralName: 'press-releases';
+    singularName: 'press-release';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    datePosted: Schema.Attribute.Date & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::press-release.press-release'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiPublicMeetingPublicMeeting
   extends Struct.CollectionTypeSchema {
   collectionName: 'public_meetings';
@@ -1165,6 +1203,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
       'api::meeting-group.meeting-group': ApiMeetingGroupMeetingGroup;
+      'api::press-release.press-release': ApiPressReleasePressRelease;
       'api::public-meeting.public-meeting': ApiPublicMeetingPublicMeeting;
       'api::public-records-request.public-records-request': ApiPublicRecordsRequestPublicRecordsRequest;
       'api::staff-member.staff-member': ApiStaffMemberStaffMember;

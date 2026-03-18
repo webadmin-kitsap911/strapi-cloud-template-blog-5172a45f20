@@ -1,0 +1,39 @@
+{
+  "collectionName": "components_blocks_headings",
+  "info": {
+    "displayName": "Heading",
+    "description": "Section heading for organizing page content",
+    "icon": "heading"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "The heading text"
+        }
+      }
+    },
+    "level": {
+      "type": "enumeration",
+      "enum": ["h2", "h3", "h4"],
+      "default": "h2",
+      "required": true,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "h2 = main section, h3 = subsection, h4 = minor heading"
+        }
+      }
+    },
+    "anchor": {
+      "type": "string",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "URL anchor for linking directly to this section (e.g., 'contact-us')"
+        }
+      }
+    }
+  }
+}
