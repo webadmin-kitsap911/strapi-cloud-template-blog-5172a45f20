@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_staff_titles",
+  "info": {
+    "displayName": "Title",
+    "description": "Staff member job title"
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

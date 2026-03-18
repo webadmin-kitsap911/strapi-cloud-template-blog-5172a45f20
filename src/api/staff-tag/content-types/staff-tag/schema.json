@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "staff_tags",
+  "info": {
+    "singularName": "staff-tag",
+    "pluralName": "staff-tags",
+    "displayName": "Staff Tag",
+    "description": "Categories for staff members (e.g., Board Member, Technical Staff)"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "staffMembers": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::staff-member.staff-member",
+      "mappedBy": "tags"
+    }
+  }
+}

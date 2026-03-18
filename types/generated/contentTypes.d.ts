@@ -586,6 +586,72 @@ export interface ApiPublicRecordsRequestPublicRecordsRequest
   };
 }
 
+export interface ApiStaffMemberStaffMember extends Struct.CollectionTypeSchema {
+  collectionName: 'staff_members';
+  info: {
+    description: 'Organization staff members';
+    displayName: 'Staff Member';
+    pluralName: 'staff-members';
+    singularName: 'staff-member';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::staff-member.staff-member'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    photo: Schema.Attribute.Media<'images'>;
+    publishedAt: Schema.Attribute.DateTime;
+    tags: Schema.Attribute.Relation<'manyToMany', 'api::staff-tag.staff-tag'>;
+    titles: Schema.Attribute.Component<'staff.title', true>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiStaffTagStaffTag extends Struct.CollectionTypeSchema {
+  collectionName: 'staff_tags';
+  info: {
+    description: 'Categories for staff members (e.g., Board Member, Technical Staff)';
+    displayName: 'Staff Tag';
+    pluralName: 'staff-tags';
+    singularName: 'staff-tag';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::staff-tag.staff-tag'
+    > &
+      Schema.Attribute.Private;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    staffMembers: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::staff-member.staff-member'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -1101,6 +1167,8 @@ declare module '@strapi/strapi' {
       'api::meeting-group.meeting-group': ApiMeetingGroupMeetingGroup;
       'api::public-meeting.public-meeting': ApiPublicMeetingPublicMeeting;
       'api::public-records-request.public-records-request': ApiPublicRecordsRequestPublicRecordsRequest;
+      'api::staff-member.staff-member': ApiStaffMemberStaffMember;
+      'api::staff-tag.staff-tag': ApiStaffTagStaffTag;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

@@ -128,6 +128,17 @@ export interface SharedSlider extends Struct.ComponentSchema {
   };
 }
 
+export interface StaffTitle extends Struct.ComponentSchema {
+  collectionName: 'components_staff_titles';
+  info: {
+    description: 'Staff member job title';
+    displayName: 'Title';
+  };
+  attributes: {
+    value: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
@@ -140,6 +151,7 @@ declare module '@strapi/strapi' {
       'shared.rich-text': SharedRichText;
       'shared.seo': SharedSeo;
       'shared.slider': SharedSlider;
+      'staff.title': StaffTitle;
     }
   }
 }
