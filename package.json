@@ -5,8 +5,11 @@
   "description": "A Strapi application to power the Kitsap 911 website",
   "scripts": {
     "build": "strapi build",
+    "build:clean": "npm run clean && strapi build",
+    "clean": "rm -rf node_modules/.strapi node_modules/.cache .cache dist",
     "deploy": "strapi deploy",
     "develop": "strapi develop",
+    "develop:clean": "npm run clean && strapi develop",
     "seed:example": "node ./scripts/seed.js",
     "start": "strapi start",
     "strapi": "strapi",
