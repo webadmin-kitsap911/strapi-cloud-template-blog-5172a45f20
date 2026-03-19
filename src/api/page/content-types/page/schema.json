@@ -62,6 +62,12 @@
         "blocks.contact-form"
       ]
     },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
     "seoTitle": {
       "type": "string"
     },

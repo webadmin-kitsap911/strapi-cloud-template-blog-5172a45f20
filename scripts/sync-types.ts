@@ -91,9 +91,34 @@ function generateTypes(): string {
   const componentTypes = new Map<string, string>();
   const componentInterfaces: string[] = [];
 
+  // Track block theme enums for normalization
+  const blockThemeEnums: string[][] = [];
+
   // Scan components first
   if (fs.existsSync(COMPONENTS_PATH)) {
     const categories = fs.readdirSync(COMPONENTS_PATH);
+
+    // First pass: collect block theme enums
+    for (const category of categories) {
+      if (category !== 'blocks') continue;
+      const categoryPath = path.join(COMPONENTS_PATH, category);
+      if (!fs.statSync(categoryPath).isDirectory()) continue;
+
+      const componentFiles = fs.readdirSync(categoryPath).filter(f => f.endsWith('.json'));
+      for (const file of componentFiles) {
+        const schema = JSON.parse(fs.readFileSync(path.join(categoryPath, file), 'utf-8'));
+        const themeAttr = schema.attributes?.theme as AttributeInfo | undefined;
+        if (themeAttr?.type === 'enumeration' && themeAttr.enum) {
+          blockThemeEnums.push(themeAttr.enum);
+        }
+      }
+    }
+
+    // Check if all block theme enums are identical
+    const normalizedBlockTheme = blockThemeEnums.length > 0 &&
+      blockThemeEnums.every(e => JSON.stringify(e) === JSON.stringify(blockThemeEnums[0]))
+        ? blockThemeEnums[0]
+        : null;
 
     for (const category of categories) {
       const categoryPath = path.join(COMPONENTS_PATH, category);
@@ -108,10 +133,17 @@ function generateTypes(): string {
         componentTypes.set(componentKey, typeName);
 
         const schema = JSON.parse(fs.readFileSync(path.join(categoryPath, file), 'utf-8'));
+        const isBlockComponent = category === 'blocks';
 
         const attributes = Object.entries(schema.attributes || {})
           .map(([key, value]) => {
             const attr = value as AttributeInfo;
+            // Use normalized BlockTheme for theme fields in block components
+            if (isBlockComponent && key === 'theme' && normalizedBlockTheme &&
+                attr.type === 'enumeration' && JSON.stringify(attr.enum) === JSON.stringify(normalizedBlockTheme)) {
+              const optional = !attr.required ? '?' : '';
+              return `  ${key}${optional}: BlockTheme;`;
+            }
             const tsType = strapiTypeToTS(attr, componentTypes);
             const optional = !attr.required ? '?' : '';
             return `  ${key}${optional}: ${tsType};`;
@@ -123,6 +155,13 @@ ${attributes}
 }
 `);
       }
+    }
+
+    // Add BlockTheme type if we have a normalized theme
+    if (normalizedBlockTheme) {
+      const themeUnion = normalizedBlockTheme.map(e => `'${e}'`).join(' | ');
+      componentInterfaces.unshift(`export type BlockTheme = ${themeUnion};
+`);
     }
   }
 

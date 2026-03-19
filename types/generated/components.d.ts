@@ -43,23 +43,10 @@ export interface BlocksCallToAction extends Struct.ComponentSchema {
         };
       }>;
     theme: Schema.Attribute.Enumeration<
-      [
-        'none',
-        'standard',
-        'darker',
-        'brighter',
-        'force-light:standard',
-        'force-light:darker',
-        'force-light:brighter',
-        'force-dark:standard',
-        'force-dark:darker',
-        'force-dark:brighter',
-        'invert:standard',
-        'invert:darker',
-        'invert:brighter',
-      ]
+      ['none', 'standard', 'brighter', 'darker']
     > &
-      Schema.Attribute.DefaultTo<'none'>;
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
   };
 }
 
@@ -73,23 +60,10 @@ export interface BlocksContactForm extends Struct.ComponentSchema {
   attributes: {
     description: Schema.Attribute.Text;
     theme: Schema.Attribute.Enumeration<
-      [
-        'none',
-        'standard',
-        'darker',
-        'brighter',
-        'force-light:standard',
-        'force-light:darker',
-        'force-light:brighter',
-        'force-dark:standard',
-        'force-dark:darker',
-        'force-dark:brighter',
-        'invert:standard',
-        'invert:darker',
-        'invert:brighter',
-      ]
+      ['none', 'standard', 'brighter', 'darker']
     > &
-      Schema.Attribute.DefaultTo<'none'>;
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
     title: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Contact Us'>;
   };
 }
@@ -103,23 +77,10 @@ export interface BlocksEmbed extends Struct.ComponentSchema {
   };
   attributes: {
     theme: Schema.Attribute.Enumeration<
-      [
-        'none',
-        'standard',
-        'darker',
-        'brighter',
-        'force-light:standard',
-        'force-light:darker',
-        'force-light:brighter',
-        'force-dark:standard',
-        'force-dark:darker',
-        'force-dark:brighter',
-        'invert:standard',
-        'invert:darker',
-        'invert:brighter',
-      ]
+      ['none', 'standard', 'brighter', 'darker']
     > &
-      Schema.Attribute.DefaultTo<'none'>;
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
     title: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         'content-manager': {
@@ -167,23 +128,10 @@ export interface BlocksGroupMembers extends Struct.ComponentSchema {
         number
       >;
     theme: Schema.Attribute.Enumeration<
-      [
-        'none',
-        'standard',
-        'darker',
-        'brighter',
-        'force-light:standard',
-        'force-light:darker',
-        'force-light:brighter',
-        'force-dark:standard',
-        'force-dark:darker',
-        'force-dark:brighter',
-        'invert:standard',
-        'invert:darker',
-        'invert:brighter',
-      ]
+      ['none', 'standard', 'brighter', 'darker']
     > &
-      Schema.Attribute.DefaultTo<'none'>;
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
   };
 }
 
@@ -217,23 +165,10 @@ export interface BlocksHeading extends Struct.ComponentSchema {
         };
       }>;
     theme: Schema.Attribute.Enumeration<
-      [
-        'none',
-        'standard',
-        'darker',
-        'brighter',
-        'force-light:standard',
-        'force-light:darker',
-        'force-light:brighter',
-        'force-dark:standard',
-        'force-dark:darker',
-        'force-dark:brighter',
-        'invert:standard',
-        'invert:darker',
-        'invert:brighter',
-      ]
+      ['none', 'standard', 'brighter', 'darker']
     > &
-      Schema.Attribute.DefaultTo<'none'>;
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
   };
 }
 
@@ -253,23 +188,10 @@ export interface BlocksImage extends Struct.ComponentSchema {
       }>;
     image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     theme: Schema.Attribute.Enumeration<
-      [
-        'none',
-        'standard',
-        'darker',
-        'brighter',
-        'force-light:standard',
-        'force-light:darker',
-        'force-light:brighter',
-        'force-dark:standard',
-        'force-dark:darker',
-        'force-dark:brighter',
-        'invert:standard',
-        'invert:darker',
-        'invert:brighter',
-      ]
+      ['none', 'standard', 'brighter', 'darker']
     > &
-      Schema.Attribute.DefaultTo<'none'>;
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
   };
 }
 
@@ -296,23 +218,10 @@ export interface BlocksPressReleases extends Struct.ComponentSchema {
       > &
       Schema.Attribute.DefaultTo<10>;
     theme: Schema.Attribute.Enumeration<
-      [
-        'none',
-        'standard',
-        'darker',
-        'brighter',
-        'force-light:standard',
-        'force-light:darker',
-        'force-light:brighter',
-        'force-dark:standard',
-        'force-dark:darker',
-        'force-dark:brighter',
-        'invert:standard',
-        'invert:darker',
-        'invert:brighter',
-      ]
+      ['none', 'standard', 'brighter', 'darker']
     > &
-      Schema.Attribute.DefaultTo<'none'>;
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
   };
 }
 
@@ -346,23 +255,10 @@ export interface BlocksPublicMeetings extends Struct.ComponentSchema {
       }> &
       Schema.Attribute.DefaultTo<false>;
     theme: Schema.Attribute.Enumeration<
-      [
-        'none',
-        'standard',
-        'darker',
-        'brighter',
-        'force-light:standard',
-        'force-light:darker',
-        'force-light:brighter',
-        'force-dark:standard',
-        'force-dark:darker',
-        'force-dark:brighter',
-        'invert:standard',
-        'invert:darker',
-        'invert:brighter',
-      ]
+      ['none', 'standard', 'brighter', 'darker']
     > &
-      Schema.Attribute.DefaultTo<'none'>;
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
   };
 }
 
@@ -376,23 +272,10 @@ export interface BlocksPublicRecordsRequestForm extends Struct.ComponentSchema {
   attributes: {
     description: Schema.Attribute.Text;
     theme: Schema.Attribute.Enumeration<
-      [
-        'none',
-        'standard',
-        'darker',
-        'brighter',
-        'force-light:standard',
-        'force-light:darker',
-        'force-light:brighter',
-        'force-dark:standard',
-        'force-dark:darker',
-        'force-dark:brighter',
-        'invert:standard',
-        'invert:darker',
-        'invert:brighter',
-      ]
+      ['none', 'standard', 'brighter', 'darker']
     > &
-      Schema.Attribute.DefaultTo<'none'>;
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
     title: Schema.Attribute.String &
       Schema.Attribute.DefaultTo<'Public Records Request'>;
   };
@@ -414,23 +297,10 @@ export interface BlocksRichText extends Struct.ComponentSchema {
         }
       >;
     theme: Schema.Attribute.Enumeration<
-      [
-        'none',
-        'standard',
-        'darker',
-        'brighter',
-        'force-light:standard',
-        'force-light:darker',
-        'force-light:brighter',
-        'force-dark:standard',
-        'force-dark:darker',
-        'force-dark:brighter',
-        'invert:standard',
-        'invert:darker',
-        'invert:brighter',
-      ]
+      ['none', 'standard', 'brighter', 'darker']
     > &
-      Schema.Attribute.DefaultTo<'none'>;
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
   };
 }
 

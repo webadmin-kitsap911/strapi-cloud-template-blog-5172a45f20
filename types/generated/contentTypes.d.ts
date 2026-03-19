@@ -512,6 +512,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    backgroundImage: Schema.Attribute.Media<'images'>;
     children: Schema.Attribute.Relation<'oneToMany', 'api::page.page'> &
       Schema.Attribute.SetPluginOptions<{
         'content-manager': {
