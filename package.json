@@ -16,17 +16,19 @@
     "sync-types": "tsx scripts/sync-types.ts"
   },
   "dependencies": {
-    "@kitsap-911/strapi-private-file-upload": "github:kitsap-911/strapi-private-file-upload",
     "@_sh/strapi-plugin-ckeditor": "^7.0.0",
+    "@kitsap-911/strapi-private-file-upload": "github:kitsap-911/strapi-private-file-upload",
     "@strapi/plugin-cloud": "5.38.0",
     "@strapi/plugin-users-permissions": "5.38.0",
     "@strapi/strapi": "5.38.0",
     "better-sqlite3": "11.3.0",
+    "esbuild": "^0.27.4",
     "fs-extra": "^10.0.0",
     "mime-types": "^2.1.27",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
+    "strapi-plugin-navigation": "^3.3.6",
     "styled-components": "^6.0.0"
   },
   "devDependencies": {
