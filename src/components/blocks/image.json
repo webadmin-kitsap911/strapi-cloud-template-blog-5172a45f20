@@ -21,6 +21,15 @@
         }
       }
     },
+    "fullBleed": {
+      "type": "boolean",
+      "default": false,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Extend image into page margins"
+        }
+      }
+    },
     "theme": {
       "type": "enumeration",
       "required": true,

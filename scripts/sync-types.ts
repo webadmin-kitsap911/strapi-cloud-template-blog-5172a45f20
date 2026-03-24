@@ -120,6 +120,7 @@ function generateTypes(): string {
         ? blockThemeEnums[0]
         : null;
 
+    // First pass: register all component type names
     for (const category of categories) {
       const categoryPath = path.join(COMPONENTS_PATH, category);
       if (!fs.statSync(categoryPath).isDirectory()) continue;
@@ -131,9 +132,26 @@ function generateTypes(): string {
         const componentKey = `${category}.${componentName}`;
         const typeName = toPascalCase(category) + toPascalCase(componentName);
         componentTypes.set(componentKey, typeName);
+      }
+    }
+
+    // Second pass: generate interfaces with all types available
+    for (const category of categories) {
+      const categoryPath = path.join(COMPONENTS_PATH, category);
+      if (!fs.statSync(categoryPath).isDirectory()) continue;
+
+      const componentFiles = fs.readdirSync(categoryPath).filter(f => f.endsWith('.json'));
+
+      for (const file of componentFiles) {
+        const componentName = file.replace('.json', '');
+        const componentKey = `${category}.${componentName}`;
+        const typeName = componentTypes.get(componentKey)!;
 
         const schema = JSON.parse(fs.readFileSync(path.join(categoryPath, file), 'utf-8'));
         const isBlockComponent = category === 'blocks';
+
+        // Columns component children get runtime IDs
+        const needsId = category === 'columns';
 
         const attributes = Object.entries(schema.attributes || {})
           .map(([key, value]) => {
@@ -150,8 +168,9 @@ function generateTypes(): string {
           })
           .join('\n');
 
+        const idField = needsId ? '  id: number;\n' : '';
         componentInterfaces.push(`export interface ${typeName} {
-${attributes}
+${idField}${attributes}
 }
 `);
       }
@@ -303,8 +322,16 @@ export interface Navigation {
 `;
 }
 
+function generateHelperTypeAliases(): string {
+  return `
+// Helper type aliases for columns block
+export type ColumnLayout = BlocksColumns['layout'];
+export type ColumnChildBlock = NonNullable<ColumnsColumnContent['children']>[number];
+`;
+}
+
 // Generate and write types
-const output = generateTypes() + generateNavigationPluginTypes();
+const output = generateTypes() + generateNavigationPluginTypes() + generateHelperTypeAliases();
 const outputPath = path.resolve(process.cwd(), FRONTEND_TYPES_PATH);
 
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });

@@ -216,6 +216,13 @@ export interface BlocksImage extends Struct.ComponentSchema {
           description: 'Optional text displayed below the image';
         };
       }>;
+    fullBleed: Schema.Attribute.Boolean &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Extend image into page margins';
+        };
+      }> &
+      Schema.Attribute.DefaultTo<false>;
     image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     theme: Schema.Attribute.Enumeration<
       ['none', 'standard', 'brighter', 'darker']
