@@ -252,8 +252,59 @@ ${attributes}
   return types.join('\n');
 }
 
+function generateNavigationPluginTypes(): string {
+  // Types for strapi-plugin-navigation
+  // Based on the plugin's Zod schemas in dist/server/src/schemas/navigation.d.ts
+  return `
+// Navigation Plugin Types (strapi-plugin-navigation)
+export type NavigationItemType = 'INTERNAL' | 'EXTERNAL' | 'WRAPPER';
+
+export interface NavigationAudience {
+  id: number;
+  documentId: string;
+  name: string;
+  key: string;
+}
+
+export interface NavigationItemRelated {
+  documentId?: string;
+  __type: string;
+  [key: string]: unknown;
+}
+
+export interface NavigationItem {
+  id: number;
+  documentId: string;
+  title: string;
+  type: NavigationItemType;
+  path?: string | null;
+  externalPath?: string | null;
+  uiRouterKey: string;
+  menuAttached: boolean;
+  order: number;
+  collapsed: boolean;
+  related?: NavigationItemRelated | null;
+  additionalFields?: Record<string, unknown> | null;
+  audience?: NavigationAudience[] | null;
+  autoSync?: boolean | null;
+  parent?: NavigationItem | null;
+  items?: NavigationItem[];
+}
+
+export interface Navigation {
+  id: number;
+  documentId: string;
+  name: string;
+  slug: string;
+  locale: string;
+  visible: boolean;
+  items?: NavigationItem[];
+}
+`;
+}
+
 // Generate and write types
-const output = generateTypes();
+const output = generateTypes() + generateNavigationPluginTypes();
 const outputPath = path.resolve(process.cwd(), FRONTEND_TYPES_PATH);
 
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });
