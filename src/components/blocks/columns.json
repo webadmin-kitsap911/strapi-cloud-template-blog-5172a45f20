@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_blocks_columns",
+  "info": {
+    "displayName": "Columns",
+    "description": "Multi-column layout with flexible content",
+    "icon": "columns"
+  },
+  "options": {},
+  "attributes": {
+    "layout": {
+      "type": "enumeration",
+      "enum": ["1:1", "2:1", "1:2", "2:3", "3:2", "1:1:1"],
+      "default": "1:1",
+      "required": true
+    },
+    "columns": {
+      "type": "component",
+      "repeatable": true,
+      "component": "columns.column-content",
+      "required": true,
+      "min": 2,
+      "max": 3
+    },
+    "theme": {
+      "type": "enumeration",
+      "enum": ["none", "standard", "brighter", "darker"],
+      "default": "standard",
+      "required": true
+    }
+  }
+}

@@ -50,6 +50,36 @@ export interface BlocksCallToAction extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksColumns extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_columns';
+  info: {
+    description: 'Multi-column layout with flexible content';
+    displayName: 'Columns';
+    icon: 'columns';
+  };
+  attributes: {
+    columns: Schema.Attribute.Component<'columns.column-content', true> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 3;
+          min: 2;
+        },
+        number
+      >;
+    layout: Schema.Attribute.Enumeration<
+      ['1:1', '2:1', '1:2', '2:3', '3:2', '1:1:1']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'1:1'>;
+    theme: Schema.Attribute.Enumeration<
+      ['none', 'standard', 'brighter', 'darker']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
+  };
+}
+
 export interface BlocksContactForm extends Struct.ComponentSchema {
   collectionName: 'components_blocks_contact_forms';
   info: {
@@ -304,6 +334,20 @@ export interface BlocksRichText extends Struct.ComponentSchema {
   };
 }
 
+export interface ColumnsColumnContent extends Struct.ComponentSchema {
+  collectionName: 'components_columns_column_contents';
+  info: {
+    description: 'Content container for a single column';
+    displayName: 'Column Content';
+    icon: 'apps';
+  };
+  attributes: {
+    children: Schema.Attribute.DynamicZone<
+      ['blocks.rich-text', 'blocks.image']
+    >;
+  };
+}
+
 export interface SharedDocumentAttachment extends Struct.ComponentSchema {
   collectionName: 'components_shared_document_attachments';
   info: {
@@ -385,6 +429,7 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'blocks.call-to-action': BlocksCallToAction;
+      'blocks.columns': BlocksColumns;
       'blocks.contact-form': BlocksContactForm;
       'blocks.embed': BlocksEmbed;
       'blocks.group-members': BlocksGroupMembers;
@@ -394,6 +439,7 @@ declare module '@strapi/strapi' {
       'blocks.public-meetings': BlocksPublicMeetings;
       'blocks.public-records-request-form': BlocksPublicRecordsRequestForm;
       'blocks.rich-text': BlocksRichText;
+      'columns.column-content': ColumnsColumnContent;
       'shared.document-attachment': SharedDocumentAttachment;
       'shared.incident': SharedIncident;
       'shared.officer': SharedOfficer;

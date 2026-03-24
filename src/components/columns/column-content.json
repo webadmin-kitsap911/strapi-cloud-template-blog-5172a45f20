@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_columns_column_contents",
+  "info": {
+    "displayName": "Column Content",
+    "description": "Content container for a single column",
+    "icon": "apps"
+  },
+  "options": {},
+  "attributes": {
+    "children": {
+      "type": "dynamiczone",
+      "components": [
+        "blocks.rich-text",
+        "blocks.image"
+      ]
+    }
+  }
+}

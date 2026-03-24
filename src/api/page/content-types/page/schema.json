@@ -59,7 +59,8 @@
         "blocks.public-meetings",
         "blocks.group-members",
         "blocks.public-records-request-form",
-        "blocks.contact-form"
+        "blocks.contact-form",
+        "blocks.columns"
       ]
     },
     "backgroundImage": {

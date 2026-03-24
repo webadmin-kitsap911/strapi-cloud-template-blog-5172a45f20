@@ -531,6 +531,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.group-members',
         'blocks.public-records-request-form',
         'blocks.contact-form',
+        'blocks.columns',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
