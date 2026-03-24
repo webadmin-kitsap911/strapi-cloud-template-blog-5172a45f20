@@ -57,10 +57,53 @@ module.exports = {
       const { action, params } = context;
 
       // Handle create and update actions
-      if ((action === 'create' || action === 'update') && params?.data?.slug) {
+      if (action === 'create' && params?.data?.slug) {
         const parentDocumentId = await getParentDocumentId(strapi, params.data.parent);
         const computedPath = await computePathFromParent(strapi, params.data.slug, parentDocumentId);
         params.data.path = computedPath;
+      }
+
+      // Handle update: always recalculate path to ensure consistency
+      if (action === 'update' && params?.documentId) {
+        // Get current page data
+        const currentPage = await strapi.documents('api::page.page').findOne({
+          documentId: params.documentId,
+          populate: ['parent'],
+          status: 'draft',
+        });
+
+        if (currentPage) {
+          // Use new slug if provided, otherwise keep current
+          const slug = params.data?.slug || currentPage.slug;
+
+          // Start with current parent
+          let parentDocumentId = currentPage.parent?.documentId || null;
+
+          // Only change parent if there's an explicit parent modification in params
+          if (params.data?.parent) {
+            const parentData = params.data.parent;
+
+            // Check for connect/set operations (setting a new parent)
+            if (parentData.connect?.length > 0 || parentData.set?.length > 0) {
+              parentDocumentId = await getParentDocumentId(strapi, parentData);
+            }
+            // Check for disconnect operation (removing parent)
+            else if (parentData.disconnect?.length > 0) {
+              parentDocumentId = null;
+            }
+            // Direct documentId reference
+            else if (parentData.documentId) {
+              parentDocumentId = parentData.documentId;
+            }
+          }
+          // Explicit null means remove parent
+          else if (params.data?.parent === null) {
+            parentDocumentId = null;
+          }
+
+          const computedPath = await computePathFromParent(strapi, slug, parentDocumentId);
+          params.data.path = computedPath;
+        }
       }
 
       // Handle publish action
