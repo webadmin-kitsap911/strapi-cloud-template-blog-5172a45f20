@@ -270,6 +270,10 @@ export interface BlocksPublicMeetings extends Struct.ComponentSchema {
     icon: 'calendar';
   };
   attributes: {
+    filterByGroups: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::meeting-group.meeting-group'
+    >;
     limit: Schema.Attribute.Integer &
       Schema.Attribute.SetPluginOptions<{
         'content-manager': {

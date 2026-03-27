@@ -32,6 +32,11 @@
       "required": true,
       "enum": ["none", "standard", "brighter", "darker"],
       "default": "standard"
+    },
+    "filterByGroups": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::meeting-group.meeting-group"
     }
   }
 }
