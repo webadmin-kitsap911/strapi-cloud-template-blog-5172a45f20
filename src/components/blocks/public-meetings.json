@@ -27,6 +27,15 @@
         }
       }
     },
+    "paginated": {
+      "type": "boolean",
+      "default": false,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Enable quarterly pagination with year/quarter selector"
+        }
+      }
+    },
     "theme": {
       "type": "enumeration",
       "required": true,

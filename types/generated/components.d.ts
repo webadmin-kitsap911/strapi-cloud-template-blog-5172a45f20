@@ -288,6 +288,13 @@ export interface BlocksPublicMeetings extends Struct.ComponentSchema {
         number
       > &
       Schema.Attribute.DefaultTo<10>;
+    paginated: Schema.Attribute.Boolean &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Enable quarterly pagination with year/quarter selector';
+        };
+      }> &
+      Schema.Attribute.DefaultTo<false>;
     showPast: Schema.Attribute.Boolean &
       Schema.Attribute.SetPluginOptions<{
         'content-manager': {
