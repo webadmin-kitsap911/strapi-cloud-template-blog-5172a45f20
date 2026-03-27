@@ -16,6 +16,11 @@
       "type": "date",
       "required": true
     },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "default": "regular-meeting"
+    },
     "timeStart": {
       "type": "time"
     },

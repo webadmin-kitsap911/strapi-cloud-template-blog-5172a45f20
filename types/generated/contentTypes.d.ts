@@ -626,6 +626,9 @@ export interface ApiPublicMeetingPublicMeeting
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'regular-meeting'>;
     timeEnd: Schema.Attribute.Time;
     timeStart: Schema.Attribute.Time;
     updatedAt: Schema.Attribute.DateTime;
