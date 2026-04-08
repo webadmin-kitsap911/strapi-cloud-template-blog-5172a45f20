@@ -361,7 +361,16 @@ export interface ColumnsColumnContent extends Struct.ComponentSchema {
   };
   attributes: {
     children: Schema.Attribute.DynamicZone<
-      ['blocks.rich-text', 'blocks.image']
+      [
+        'blocks.rich-text',
+        'blocks.image',
+        'blocks.heading',
+        'blocks.call-to-action',
+        'blocks.embed',
+        'blocks.press-releases',
+        'blocks.group-members',
+        'blocks.contact-form',
+      ]
     >;
   };
 }
