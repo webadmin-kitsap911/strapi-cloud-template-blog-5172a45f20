@@ -9,7 +9,6 @@
   "attributes": {
     "heading": {
       "type": "string",
-      "required": true,
       "pluginOptions": {
         "content-manager": {
           "description": "Main headline for the CTA"
@@ -26,19 +25,17 @@
     },
     "buttonText": {
       "type": "string",
-      "required": true,
       "pluginOptions": {
         "content-manager": {
-          "description": "Text displayed on the button"
+          "description": "(Deprecated) Text displayed on the button - use links instead"
         }
       }
     },
     "buttonUrl": {
       "type": "string",
-      "required": true,
       "pluginOptions": {
         "content-manager": {
-          "description": "URL the button links to (e.g., /contact or https://example.com)"
+          "description": "(Deprecated) URL the button links to - use links instead"
         }
       }
     },
@@ -49,6 +46,19 @@
       "pluginOptions": {
         "content-manager": {
           "description": "Button style: primary (filled), secondary (muted), outline (bordered)"
+        }
+      }
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.link"
+    },
+    "closingMessage": {
+      "type": "text",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Optional message displayed below the buttons"
         }
       }
     },

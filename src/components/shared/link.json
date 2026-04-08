@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_shared_links",
+  "info": {
+    "displayName": "Link",
+    "description": "A link with text and URL"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Text displayed for the link"
+        }
+      }
+    },
+    "href": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "URL the link points to (e.g., /contact or https://example.com)"
+        }
+      }
+    },
+    "openInNewWindow": {
+      "type": "boolean",
+      "default": false,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Open link in a new browser tab"
+        }
+      }
+    }
+  }
+}

@@ -9,26 +9,30 @@ export interface BlocksCallToAction extends Struct.ComponentSchema {
   };
   attributes: {
     buttonText: Schema.Attribute.String &
-      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         'content-manager': {
-          description: 'Text displayed on the button';
+          description: '(Deprecated) Text displayed on the button - use links instead';
         };
       }>;
     buttonUrl: Schema.Attribute.String &
-      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         'content-manager': {
-          description: 'URL the button links to (e.g., /contact or https://example.com)';
+          description: '(Deprecated) URL the button links to - use links instead';
+        };
+      }>;
+    closingMessage: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Optional message displayed below the buttons';
         };
       }>;
     heading: Schema.Attribute.String &
-      Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         'content-manager': {
           description: 'Main headline for the CTA';
         };
       }>;
+    links: Schema.Attribute.Component<'shared.link', true>;
     style: Schema.Attribute.Enumeration<['primary', 'secondary', 'outline']> &
       Schema.Attribute.SetPluginOptions<{
         'content-manager': {
@@ -416,6 +420,37 @@ export interface SharedIncident extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedLink extends Struct.ComponentSchema {
+  collectionName: 'components_shared_links';
+  info: {
+    description: 'A link with text and URL';
+    displayName: 'Link';
+  };
+  attributes: {
+    href: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'URL the link points to (e.g., /contact or https://example.com)';
+        };
+      }>;
+    openInNewWindow: Schema.Attribute.Boolean &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Open link in a new browser tab';
+        };
+      }> &
+      Schema.Attribute.DefaultTo<false>;
+    text: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Text displayed for the link';
+        };
+      }>;
+  };
+}
+
 export interface SharedOfficer extends Struct.ComponentSchema {
   collectionName: 'components_shared_officers';
   info: {
@@ -469,6 +504,7 @@ declare module '@strapi/strapi' {
       'columns.column-content': ColumnsColumnContent;
       'shared.document-attachment': SharedDocumentAttachment;
       'shared.incident': SharedIncident;
+      'shared.link': SharedLink;
       'shared.officer': SharedOfficer;
       'shared.person-name': SharedPersonName;
       'staff.title': StaffTitle;
