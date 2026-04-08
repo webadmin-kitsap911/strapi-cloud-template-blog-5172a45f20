@@ -16,9 +16,20 @@
       "type": "string",
       "required": true
     },
+    "releaseLabel": {
+      "type": "string"
+    },
     "datePosted": {
       "type": "date",
       "required": true
+    },
+    "location": {
+      "type": "string"
+    },
+    "contacts": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.press-contact"
     },
     "content": {
       "type": "customField",

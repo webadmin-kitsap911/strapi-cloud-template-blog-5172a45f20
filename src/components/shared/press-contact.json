@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_shared_press_contacts",
+  "info": {
+    "displayName": "Press Contact",
+    "description": "Contact person for a press release"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "phone": {
+      "type": "string"
+    }
+  }
+}

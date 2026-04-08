@@ -571,6 +571,7 @@ export interface ApiPressReleasePressRelease
     draftAndPublish: true;
   };
   attributes: {
+    contacts: Schema.Attribute.Component<'shared.press-contact', true>;
     content: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
         'plugin::ckeditor5.CKEditor',
@@ -588,7 +589,9 @@ export interface ApiPressReleasePressRelease
       'api::press-release.press-release'
     > &
       Schema.Attribute.Private;
+    location: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    releaseLabel: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
