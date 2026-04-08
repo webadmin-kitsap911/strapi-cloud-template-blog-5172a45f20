@@ -16,6 +16,9 @@
       "type": "string",
       "required": true
     },
+    "phone": {
+      "type": "string"
+    },
     "titles": {
       "type": "component",
       "repeatable": true,

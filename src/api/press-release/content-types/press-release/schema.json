@@ -27,9 +27,9 @@
       "type": "string"
     },
     "contacts": {
-      "type": "component",
-      "repeatable": true,
-      "component": "shared.press-contact"
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::staff-member.staff-member"
     },
     "content": {
       "type": "customField",

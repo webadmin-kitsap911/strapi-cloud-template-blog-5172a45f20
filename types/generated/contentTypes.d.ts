@@ -571,7 +571,10 @@ export interface ApiPressReleasePressRelease
     draftAndPublish: true;
   };
   attributes: {
-    contacts: Schema.Attribute.Component<'shared.press-contact', true>;
+    contacts: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::staff-member.staff-member'
+    >;
     content: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
         'plugin::ckeditor5.CKEditor',
@@ -710,6 +713,7 @@ export interface ApiStaffMemberStaffMember extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
+    phone: Schema.Attribute.String;
     photo: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
     tags: Schema.Attribute.Relation<'manyToMany', 'api::staff-tag.staff-tag'>;

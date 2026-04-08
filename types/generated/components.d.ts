@@ -476,18 +476,6 @@ export interface SharedPersonName extends Struct.ComponentSchema {
   };
 }
 
-export interface SharedPressContact extends Struct.ComponentSchema {
-  collectionName: 'components_shared_press_contacts';
-  info: {
-    description: 'Contact person for a press release';
-    displayName: 'Press Contact';
-  };
-  attributes: {
-    name: Schema.Attribute.String & Schema.Attribute.Required;
-    phone: Schema.Attribute.String;
-  };
-}
-
 export interface StaffTitle extends Struct.ComponentSchema {
   collectionName: 'components_staff_titles';
   info: {
@@ -519,7 +507,6 @@ declare module '@strapi/strapi' {
       'shared.link': SharedLink;
       'shared.officer': SharedOfficer;
       'shared.person-name': SharedPersonName;
-      'shared.press-contact': SharedPressContact;
       'staff.title': StaffTitle;
     }
   }
