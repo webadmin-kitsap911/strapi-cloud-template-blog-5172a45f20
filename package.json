@@ -11,6 +11,8 @@
     "develop": "strapi develop",
     "develop:clean": "npm run clean && strapi develop",
     "seed:example": "node ./scripts/seed.js",
+    "import:staff-members": "tsx scripts/import-staff-members.ts",
+    "import:awards": "tsx scripts/import-awards.ts",
     "start": "strapi start",
     "strapi": "strapi",
     "sync-types": "tsx scripts/sync-types.ts"
