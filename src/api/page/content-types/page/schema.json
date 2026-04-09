@@ -61,7 +61,8 @@
         "blocks.public-records-request-form",
         "blocks.contact-form",
         "blocks.columns",
-        "blocks.awards"
+        "blocks.awards",
+        "blocks.tax-info-request"
       ]
     },
     "backgroundImage": {

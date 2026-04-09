@@ -568,6 +568,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.contact-form',
         'blocks.columns',
         'blocks.awards',
+        'blocks.tax-info-request',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -788,6 +789,44 @@ export interface ApiStaffTagStaffTag extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::staff-member.staff-member'
     >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTaxInfoRequestTaxInfoRequest
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'tax_info_requests';
+  info: {
+    description: 'Employee tax information request submissions';
+    displayName: 'Tax Info Request';
+    pluralName: 'tax-info-requests';
+    singularName: 'tax-info-request';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    email: Schema.Attribute.Email & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::tax-info-request.tax-info-request'
+    > &
+      Schema.Attribute.Private;
+    mailingAddress: Schema.Attribute.Text & Schema.Attribute.Required;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    otherInformation: Schema.Attribute.Text;
+    phone: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    request1095C: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    request1099: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    requestW2: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    taxYears: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1466,6 +1505,7 @@ declare module '@strapi/strapi' {
       'api::public-records-request.public-records-request': ApiPublicRecordsRequestPublicRecordsRequest;
       'api::staff-member.staff-member': ApiStaffMemberStaffMember;
       'api::staff-tag.staff-tag': ApiStaffTagStaffTag;
+      'api::tax-info-request.tax-info-request': ApiTaxInfoRequestTaxInfoRequest;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "tax_info_requests",
+  "info": {
+    "singularName": "tax-info-request",
+    "pluralName": "tax-info-requests",
+    "displayName": "Tax Info Request",
+    "description": "Employee tax information request submissions"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "mailingAddress": {
+      "type": "text",
+      "required": true
+    },
+    "requestW2": {
+      "type": "boolean",
+      "default": false
+    },
+    "request1095C": {
+      "type": "boolean",
+      "default": false
+    },
+    "request1099": {
+      "type": "boolean",
+      "default": false
+    },
+    "taxYears": {
+      "type": "string"
+    },
+    "otherInformation": {
+      "type": "text"
+    }
+  }
+}

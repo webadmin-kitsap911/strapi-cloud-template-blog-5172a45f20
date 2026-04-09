@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_blocks_tax_info_requests",
+  "info": {
+    "displayName": "Tax Info Request",
+    "description": "Form for requesting employee tax documents (W-2, 1095-C, 1099)",
+    "icon": "file-invoice-dollar"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "Tax Information Request"
+    },
+    "description": {
+      "type": "text"
+    },
+    "theme": {
+      "type": "enumeration",
+      "required": true,
+      "enum": ["none", "standard", "brighter", "darker"],
+      "default": "standard"
+    }
+  }
+}

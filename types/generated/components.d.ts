@@ -374,6 +374,25 @@ export interface BlocksRichText extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksTaxInfoRequest extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_tax_info_requests';
+  info: {
+    description: 'Form for requesting employee tax documents (W-2, 1095-C, 1099)';
+    displayName: 'Tax Info Request';
+    icon: 'file-invoice-dollar';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    theme: Schema.Attribute.Enumeration<
+      ['none', 'standard', 'brighter', 'darker']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.DefaultTo<'Tax Information Request'>;
+  };
+}
+
 export interface ColumnsColumnContent extends Struct.ComponentSchema {
   collectionName: 'components_columns_column_contents';
   info: {
@@ -520,6 +539,7 @@ declare module '@strapi/strapi' {
       'blocks.public-meetings': BlocksPublicMeetings;
       'blocks.public-records-request-form': BlocksPublicRecordsRequestForm;
       'blocks.rich-text': BlocksRichText;
+      'blocks.tax-info-request': BlocksTaxInfoRequest;
       'columns.column-content': ColumnsColumnContent;
       'shared.document-attachment': SharedDocumentAttachment;
       'shared.incident': SharedIncident;
