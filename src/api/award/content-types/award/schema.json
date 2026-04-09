@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "awards",
+  "info": {
+    "singularName": "award",
+    "pluralName": "awards",
+    "displayName": "Award",
+    "description": "Staff member awards and recognition"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "staffMember": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::staff-member.staff-member",
+      "required": true
+    },
+    "year": {
+      "type": "integer",
+      "required": true
+    },
+    "presentingOrganization": {
+      "type": "string",
+      "required": true
+    },
+    "awardName": {
+      "type": "string",
+      "required": true
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": ["external", "internal"],
+      "required": true
+    }
+  }
+}

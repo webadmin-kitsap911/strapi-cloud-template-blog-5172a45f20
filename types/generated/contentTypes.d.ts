@@ -430,6 +430,41 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAwardAward extends Struct.CollectionTypeSchema {
+  collectionName: 'awards';
+  info: {
+    description: 'Staff member awards and recognition';
+    displayName: 'Award';
+    pluralName: 'awards';
+    singularName: 'award';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    awardName: Schema.Attribute.String & Schema.Attribute.Required;
+    category: Schema.Attribute.Enumeration<['external', 'internal']> &
+      Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::award.award'> &
+      Schema.Attribute.Private;
+    presentingOrganization: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    staffMember: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::staff-member.staff-member'
+    > &
+      Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    year: Schema.Attribute.Integer & Schema.Attribute.Required;
+  };
+}
+
 export interface ApiContactSubmissionContactSubmission
   extends Struct.CollectionTypeSchema {
   collectionName: 'contact_submissions';
@@ -532,6 +567,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.public-records-request-form',
         'blocks.contact-form',
         'blocks.columns',
+        'blocks.awards',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -1421,6 +1457,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::award.award': ApiAwardAward;
       'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
       'api::meeting-group.meeting-group': ApiMeetingGroupMeetingGroup;
       'api::page.page': ApiPagePage;

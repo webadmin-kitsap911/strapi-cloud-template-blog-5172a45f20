@@ -1,5 +1,23 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface BlocksAwards extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_awards';
+  info: {
+    description: 'Display staff awards organized by year';
+    displayName: 'Awards';
+    icon: 'trophy';
+  };
+  attributes: {
+    category: Schema.Attribute.Enumeration<['external', 'internal']> &
+      Schema.Attribute.Required;
+    theme: Schema.Attribute.Enumeration<
+      ['none', 'standard', 'brighter', 'darker']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
+  };
+}
+
 export interface BlocksCallToAction extends Struct.ComponentSchema {
   collectionName: 'components_blocks_call_to_actions';
   info: {
@@ -490,6 +508,7 @@ export interface StaffTitle extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'blocks.awards': BlocksAwards;
       'blocks.call-to-action': BlocksCallToAction;
       'blocks.columns': BlocksColumns;
       'blocks.contact-form': BlocksContactForm;

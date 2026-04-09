@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_blocks_awards",
+  "info": {
+    "displayName": "Awards",
+    "description": "Display staff awards organized by year",
+    "icon": "trophy"
+  },
+  "options": {},
+  "attributes": {
+    "category": {
+      "type": "enumeration",
+      "enum": ["external", "internal"],
+      "required": true
+    },
+    "theme": {
+      "type": "enumeration",
+      "required": true,
+      "enum": ["none", "standard", "brighter", "darker"],
+      "default": "standard"
+    }
+  }
+}

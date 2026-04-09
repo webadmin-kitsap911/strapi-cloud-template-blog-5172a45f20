@@ -60,7 +60,8 @@
         "blocks.group-members",
         "blocks.public-records-request-form",
         "blocks.contact-form",
-        "blocks.columns"
+        "blocks.columns",
+        "blocks.awards"
       ]
     },
     "backgroundImage": {
