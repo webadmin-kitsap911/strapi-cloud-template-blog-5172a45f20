@@ -416,6 +416,24 @@ export interface ColumnsColumnContent extends Struct.ComponentSchema {
   };
 }
 
+export interface HomeAnnouncementItem extends Struct.ComponentSchema {
+  collectionName: 'components_home_announcement_items';
+  info: {
+    description: 'A single announcement for the home page';
+    displayName: 'Announcement Item';
+  };
+  attributes: {
+    blurb: Schema.Attribute.Text &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 255;
+      }>;
+    ctaHref: Schema.Attribute.String & Schema.Attribute.Required;
+    ctaText: Schema.Attribute.String & Schema.Attribute.Required;
+    thumbnail: Schema.Attribute.Media<'images'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedDocumentAttachment extends Struct.ComponentSchema {
   collectionName: 'components_shared_document_attachments';
   info: {
@@ -541,6 +559,7 @@ declare module '@strapi/strapi' {
       'blocks.rich-text': BlocksRichText;
       'blocks.tax-info-request': BlocksTaxInfoRequest;
       'columns.column-content': ColumnsColumnContent;
+      'home.announcement-item': HomeAnnouncementItem;
       'shared.document-attachment': SharedDocumentAttachment;
       'shared.incident': SharedIncident;
       'shared.link': SharedLink;

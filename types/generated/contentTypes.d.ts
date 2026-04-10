@@ -498,6 +498,40 @@ export interface ApiContactSubmissionContactSubmission
   };
 }
 
+export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
+  collectionName: 'home_page';
+  info: {
+    displayName: 'Home Page';
+    pluralName: 'home-pages';
+    singularName: 'home-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    announcements: Schema.Attribute.Component<'home.announcement-item', true> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 3;
+        },
+        number
+      >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::home-page.home-page'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiMeetingGroupMeetingGroup
   extends Struct.CollectionTypeSchema {
   collectionName: 'meeting_groups';
@@ -1498,6 +1532,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::award.award': ApiAwardAward;
       'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
+      'api::home-page.home-page': ApiHomePageHomePage;
       'api::meeting-group.meeting-group': ApiMeetingGroupMeetingGroup;
       'api::page.page': ApiPagePage;
       'api::press-release.press-release': ApiPressReleasePressRelease;
