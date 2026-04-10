@@ -291,6 +291,11 @@ export interface NavigationItemRelated {
   [key: string]: unknown;
 }
 
+export interface NavigationAdditionalFields {
+  wrapper_icon?: string | null;
+  [key: string]: unknown;
+}
+
 export interface NavigationItem {
   id: number;
   documentId: string;
@@ -303,7 +308,7 @@ export interface NavigationItem {
   order: number;
   collapsed: boolean;
   related?: NavigationItemRelated | null;
-  additionalFields?: Record<string, unknown> | null;
+  additionalFields?: NavigationAdditionalFields | null;
   audience?: NavigationAudience[] | null;
   autoSync?: boolean | null;
   parent?: NavigationItem | null;
