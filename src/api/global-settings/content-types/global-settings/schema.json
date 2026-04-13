@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "global_settings",
+  "info": {
+    "singularName": "global-settings",
+    "pluralName": "all-global-settings",
+    "displayName": "Global Settings",
+    "description": "Site-wide default settings"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "defaultMeetingUrl": {
+      "type": "string",
+      "regex": "^https?://.*"
+    },
+    "defaultPageBackgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    }
+  }
+}

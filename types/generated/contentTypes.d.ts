@@ -498,6 +498,37 @@ export interface ApiContactSubmissionContactSubmission
   };
 }
 
+export interface ApiGlobalSettingsGlobalSettings
+  extends Struct.SingleTypeSchema {
+  collectionName: 'global_settings';
+  info: {
+    description: 'Site-wide default settings';
+    displayName: 'Global Settings';
+    pluralName: 'all-global-settings';
+    singularName: 'global-settings';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    defaultMeetingUrl: Schema.Attribute.String;
+    defaultPageBackgroundImage: Schema.Attribute.Media<'images'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::global-settings.global-settings'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
   collectionName: 'home_page';
   info: {
@@ -1532,6 +1563,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::award.award': ApiAwardAward;
       'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
+      'api::global-settings.global-settings': ApiGlobalSettingsGlobalSettings;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::meeting-group.meeting-group': ApiMeetingGroupMeetingGroup;
       'api::page.page': ApiPagePage;
