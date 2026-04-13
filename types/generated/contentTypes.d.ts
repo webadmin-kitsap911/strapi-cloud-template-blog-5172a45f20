@@ -733,6 +733,7 @@ export interface ApiPublicMeetingPublicMeeting
       'api::public-meeting.public-meeting'
     > &
       Schema.Attribute.Private;
+    meetingUrl: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.String &
       Schema.Attribute.Required &
