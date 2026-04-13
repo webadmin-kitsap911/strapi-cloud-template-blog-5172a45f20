@@ -634,6 +634,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.columns',
         'blocks.awards',
         'blocks.tax-info-request',
+        'blocks.resource-links',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;

@@ -62,7 +62,8 @@
         "blocks.contact-form",
         "blocks.columns",
         "blocks.awards",
-        "blocks.tax-info-request"
+        "blocks.tax-info-request",
+        "blocks.resource-links"
       ]
     },
     "backgroundImage": {

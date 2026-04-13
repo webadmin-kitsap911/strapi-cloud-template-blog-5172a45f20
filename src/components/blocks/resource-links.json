@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_blocks_resource_links",
+  "info": {
+    "displayName": "Resource Links",
+    "description": "Links to files, internal pages, or external URLs displayed as styled tiles",
+    "icon": "link"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Optional heading displayed above the links"
+        }
+      }
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.resource-link",
+      "min": 1,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Resource links to display"
+        }
+      }
+    },
+    "theme": {
+      "type": "enumeration",
+      "required": true,
+      "enum": ["none", "standard", "brighter", "darker"],
+      "default": "standard"
+    }
+  }
+}

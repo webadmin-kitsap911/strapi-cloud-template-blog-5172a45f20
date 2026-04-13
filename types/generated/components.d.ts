@@ -351,6 +351,40 @@ export interface BlocksPublicRecordsRequestForm extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksResourceLinks extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_resource_links';
+  info: {
+    description: 'Links to files, internal pages, or external URLs displayed as styled tiles';
+    displayName: 'Resource Links';
+    icon: 'link';
+  };
+  attributes: {
+    heading: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Optional heading displayed above the links';
+        };
+      }>;
+    items: Schema.Attribute.Component<'shared.resource-link', true> &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Resource links to display';
+        };
+      }> &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      >;
+    theme: Schema.Attribute.Enumeration<
+      ['none', 'standard', 'brighter', 'darker']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
+  };
+}
+
 export interface BlocksRichText extends Struct.ComponentSchema {
   collectionName: 'components_blocks_rich_texts';
   info: {
@@ -482,7 +516,7 @@ export interface SharedLink extends Struct.ComponentSchema {
     displayName: 'Link';
   };
   attributes: {
-    href: Schema.Attribute.String &
+    href: Schema.Attribute.Text &
       Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         'content-manager': {
@@ -531,6 +565,61 @@ export interface SharedPersonName extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedResourceLink extends Struct.ComponentSchema {
+  collectionName: 'components_shared_resource_links';
+  info: {
+    description: 'A link to a file, internal page, or external URL';
+    displayName: 'Resource Link';
+  };
+  attributes: {
+    externalUrl: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: "External URL (visible when type is 'external')";
+        };
+      }>;
+    file: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: "File from media library (visible when type is 'file')";
+        };
+      }>;
+    openInNewWindow: Schema.Attribute.Boolean &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Open link in a new browser tab';
+        };
+      }> &
+      Schema.Attribute.DefaultTo<true>;
+    page: Schema.Attribute.Relation<'oneToOne', 'api::page.page'> &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: "Internal page reference (visible when type is 'page')";
+        };
+      }>;
+    postedDate: Schema.Attribute.Date &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Date used for sorting and display';
+        };
+      }>;
+    resourceType: Schema.Attribute.Enumeration<['file', 'page', 'external']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Link type: file (media library), page (internal), or external (URL)';
+        };
+      }>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Display name for the link';
+        };
+      }>;
+  };
+}
+
 export interface StaffTitle extends Struct.ComponentSchema {
   collectionName: 'components_staff_titles';
   info: {
@@ -556,6 +645,7 @@ declare module '@strapi/strapi' {
       'blocks.press-releases': BlocksPressReleases;
       'blocks.public-meetings': BlocksPublicMeetings;
       'blocks.public-records-request-form': BlocksPublicRecordsRequestForm;
+      'blocks.resource-links': BlocksResourceLinks;
       'blocks.rich-text': BlocksRichText;
       'blocks.tax-info-request': BlocksTaxInfoRequest;
       'columns.column-content': ColumnsColumnContent;
@@ -565,6 +655,7 @@ declare module '@strapi/strapi' {
       'shared.link': SharedLink;
       'shared.officer': SharedOfficer;
       'shared.person-name': SharedPersonName;
+      'shared.resource-link': SharedResourceLink;
       'staff.title': StaffTitle;
     }
   }

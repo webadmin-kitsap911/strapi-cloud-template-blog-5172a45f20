@@ -1,0 +1,114 @@
+{
+  "collectionName": "components_shared_resource_links",
+  "info": {
+    "displayName": "Resource Link",
+    "description": "A link to a file, internal page, or external URL"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Display name for the link"
+        }
+      },
+      "required": true
+    },
+    "resourceType": {
+      "type": "enumeration",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Link type: file (media library), page (internal), or external (URL)"
+        }
+      },
+      "required": true,
+      "enum": [
+        "file",
+        "page",
+        "external"
+      ]
+    },
+    "postedDate": {
+      "type": "date",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Date used for sorting and display"
+        }
+      }
+    },
+    "openInNewWindow": {
+      "type": "boolean",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Open link in a new browser tab"
+        }
+      },
+      "default": true
+    },
+    "file": {
+      "type": "media",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "File from media library (visible when type is 'file')"
+        }
+      },
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "resourceType"
+            },
+            "file"
+          ]
+        }
+      },
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "page": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::page.page",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Internal page reference (visible when type is 'page')"
+        }
+      },
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "resourceType"
+            },
+            "page"
+          ]
+        }
+      }
+    },
+    "externalUrl": {
+      "type": "string",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "External URL (visible when type is 'external')"
+        }
+      },
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "resourceType"
+            },
+            "external"
+          ]
+        }
+      }
+    }
+  }
+}
