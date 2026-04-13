@@ -495,7 +495,7 @@ export interface SharedLink extends Struct.ComponentSchema {
           description: 'Open link in a new browser tab';
         };
       }> &
-      Schema.Attribute.DefaultTo<false>;
+      Schema.Attribute.DefaultTo<true>;
     text: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{

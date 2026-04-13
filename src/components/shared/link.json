@@ -26,7 +26,7 @@
     },
     "openInNewWindow": {
       "type": "boolean",
-      "default": false,
+      "default": true,
       "pluginOptions": {
         "content-manager": {
           "description": "Open link in a new browser tab"
