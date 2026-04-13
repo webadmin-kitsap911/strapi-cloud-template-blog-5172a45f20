@@ -2,7 +2,7 @@
   "collectionName": "components_blocks_resource_links",
   "info": {
     "displayName": "Resource Links",
-    "description": "Links to files, internal pages, or external URLs displayed as styled tiles",
+    "description": "Links to files, internal pages, or external URLs displayed as tiles or table",
     "icon": "link"
   },
   "options": {},
@@ -12,6 +12,17 @@
       "pluginOptions": {
         "content-manager": {
           "description": "Optional heading displayed above the links"
+        }
+      }
+    },
+    "displayMode": {
+      "type": "enumeration",
+      "required": true,
+      "enum": ["tiles", "table"],
+      "default": "tiles",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Display as tile grid or table list"
         }
       }
     },

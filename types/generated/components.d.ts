@@ -354,11 +354,19 @@ export interface BlocksPublicRecordsRequestForm extends Struct.ComponentSchema {
 export interface BlocksResourceLinks extends Struct.ComponentSchema {
   collectionName: 'components_blocks_resource_links';
   info: {
-    description: 'Links to files, internal pages, or external URLs displayed as styled tiles';
+    description: 'Links to files, internal pages, or external URLs displayed as tiles or table';
     displayName: 'Resource Links';
     icon: 'link';
   };
   attributes: {
+    displayMode: Schema.Attribute.Enumeration<['tiles', 'table']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Display as tile grid or table list';
+        };
+      }> &
+      Schema.Attribute.DefaultTo<'tiles'>;
     heading: Schema.Attribute.String &
       Schema.Attribute.SetPluginOptions<{
         'content-manager': {
