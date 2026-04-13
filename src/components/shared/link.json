@@ -16,7 +16,7 @@
       }
     },
     "href": {
-      "type": "string",
+      "type": "text",
       "required": true,
       "pluginOptions": {
         "content-manager": {
