@@ -23,7 +23,7 @@
     },
     "theme": {
       "type": "enumeration",
-      "enum": ["none", "standard", "brighter", "darker"],
+      "enum": ["none", "standard", "brighter", "darker", "inherit"],
       "default": "standard",
       "required": true
     }
