@@ -735,6 +735,7 @@ export interface ApiPublicMeetingPublicMeeting
       Schema.Attribute.Private;
     meetingUrl: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    recordingLinks: Schema.Attribute.Component<'shared.link', true>;
     slug: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'regular-meeting'>;

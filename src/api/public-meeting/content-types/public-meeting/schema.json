@@ -44,6 +44,11 @@
     "meetingUrl": {
       "type": "string",
       "regex": "^https?://.*"
+    },
+    "recordingLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.link"
     }
   }
 }
