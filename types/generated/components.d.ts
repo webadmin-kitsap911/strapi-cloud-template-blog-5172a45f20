@@ -488,6 +488,7 @@ export interface ColumnsColumnContent extends Struct.ComponentSchema {
         'blocks.heading',
         'blocks.call-to-action',
         'blocks.embed',
+        'blocks.video',
         'blocks.press-releases',
         'blocks.group-members',
         'blocks.contact-form',
