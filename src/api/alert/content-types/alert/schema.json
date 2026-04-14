@@ -1,0 +1,79 @@
+{
+  "kind": "collectionType",
+  "collectionName": "alerts",
+  "info": {
+    "singularName": "alert",
+    "pluralName": "alerts",
+    "displayName": "Alert",
+    "description": "Site-wide alerts displayed as banners or popup modals"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Internal name for CMS organization"
+        }
+      }
+    },
+    "displayType": {
+      "type": "enumeration",
+      "enum": ["banner", "popup"],
+      "required": true,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "How the alert is displayed: banner (top of page) or popup (modal dialog)"
+        }
+      }
+    },
+    "severity": {
+      "type": "enumeration",
+      "enum": ["info", "warning", "emergency"],
+      "required": true,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Visual styling and dismissibility: emergency alerts cannot be dismissed"
+        }
+      }
+    },
+    "content": {
+      "type": "richtext",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Alert message with rich text formatting"
+        }
+      }
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.resource-link",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Action links for the alert"
+        }
+      }
+    },
+    "startDateTime": {
+      "type": "datetime",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "When to start showing the alert (leave empty to show immediately)"
+        }
+      }
+    },
+    "endDateTime": {
+      "type": "datetime",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "When to stop showing the alert (leave empty to show indefinitely)"
+        }
+      }
+    }
+  }
+}

@@ -11,7 +11,7 @@ export interface BlocksAwards extends Struct.ComponentSchema {
     category: Schema.Attribute.Enumeration<['external', 'internal']> &
       Schema.Attribute.Required;
     theme: Schema.Attribute.Enumeration<
-      ['none', 'standard', 'brighter', 'darker']
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'standard'>;
@@ -65,7 +65,7 @@ export interface BlocksCallToAction extends Struct.ComponentSchema {
         };
       }>;
     theme: Schema.Attribute.Enumeration<
-      ['none', 'standard', 'brighter', 'darker']
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'standard'>;
@@ -95,7 +95,7 @@ export interface BlocksColumns extends Struct.ComponentSchema {
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'1:1'>;
     theme: Schema.Attribute.Enumeration<
-      ['none', 'standard', 'brighter', 'darker']
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'standard'>;
@@ -112,7 +112,7 @@ export interface BlocksContactForm extends Struct.ComponentSchema {
   attributes: {
     description: Schema.Attribute.Text;
     theme: Schema.Attribute.Enumeration<
-      ['none', 'standard', 'brighter', 'darker']
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'standard'>;
@@ -129,7 +129,7 @@ export interface BlocksEmbed extends Struct.ComponentSchema {
   };
   attributes: {
     theme: Schema.Attribute.Enumeration<
-      ['none', 'standard', 'brighter', 'darker']
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'standard'>;
@@ -180,7 +180,7 @@ export interface BlocksGroupMembers extends Struct.ComponentSchema {
         number
       >;
     theme: Schema.Attribute.Enumeration<
-      ['none', 'standard', 'brighter', 'darker']
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'standard'>;
@@ -217,7 +217,7 @@ export interface BlocksHeading extends Struct.ComponentSchema {
         };
       }>;
     theme: Schema.Attribute.Enumeration<
-      ['none', 'standard', 'brighter', 'darker']
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'standard'>;
@@ -247,7 +247,7 @@ export interface BlocksImage extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<false>;
     image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     theme: Schema.Attribute.Enumeration<
-      ['none', 'standard', 'brighter', 'darker']
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'standard'>;
@@ -277,7 +277,7 @@ export interface BlocksPressReleases extends Struct.ComponentSchema {
       > &
       Schema.Attribute.DefaultTo<10>;
     theme: Schema.Attribute.Enumeration<
-      ['none', 'standard', 'brighter', 'darker']
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'standard'>;
@@ -325,7 +325,7 @@ export interface BlocksPublicMeetings extends Struct.ComponentSchema {
       }> &
       Schema.Attribute.DefaultTo<false>;
     theme: Schema.Attribute.Enumeration<
-      ['none', 'standard', 'brighter', 'darker']
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'standard'>;
@@ -342,7 +342,7 @@ export interface BlocksPublicRecordsRequestForm extends Struct.ComponentSchema {
   attributes: {
     description: Schema.Attribute.Text;
     theme: Schema.Attribute.Enumeration<
-      ['none', 'standard', 'brighter', 'darker']
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'standard'>;
@@ -386,7 +386,7 @@ export interface BlocksResourceLinks extends Struct.ComponentSchema {
         number
       >;
     theme: Schema.Attribute.Enumeration<
-      ['none', 'standard', 'brighter', 'darker']
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'standard'>;
@@ -409,7 +409,7 @@ export interface BlocksRichText extends Struct.ComponentSchema {
         }
       >;
     theme: Schema.Attribute.Enumeration<
-      ['none', 'standard', 'brighter', 'darker']
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'standard'>;
@@ -426,7 +426,7 @@ export interface BlocksTaxInfoRequest extends Struct.ComponentSchema {
   attributes: {
     description: Schema.Attribute.Text;
     theme: Schema.Attribute.Enumeration<
-      ['none', 'standard', 'brighter', 'darker']
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'standard'>;

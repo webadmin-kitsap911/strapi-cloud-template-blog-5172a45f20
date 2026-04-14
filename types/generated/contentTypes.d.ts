@@ -430,6 +430,76 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAlertAlert extends Struct.CollectionTypeSchema {
+  collectionName: 'alerts';
+  info: {
+    description: 'Site-wide alerts displayed as banners or popup modals';
+    displayName: 'Alert';
+    pluralName: 'alerts';
+    singularName: 'alert';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Alert message with rich text formatting';
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    displayType: Schema.Attribute.Enumeration<['banner', 'popup']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'How the alert is displayed: banner (top of page) or popup (modal dialog)';
+        };
+      }>;
+    endDateTime: Schema.Attribute.DateTime &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'When to stop showing the alert (leave empty to show indefinitely)';
+        };
+      }>;
+    links: Schema.Attribute.Component<'shared.resource-link', true> &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Action links for the alert';
+        };
+      }>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::alert.alert'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    severity: Schema.Attribute.Enumeration<['info', 'warning', 'emergency']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Visual styling and dismissibility: emergency alerts cannot be dismissed';
+        };
+      }>;
+    startDateTime: Schema.Attribute.DateTime &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'When to start showing the alert (leave empty to show immediately)';
+        };
+      }>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Internal name for CMS organization';
+        };
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiAwardAward extends Struct.CollectionTypeSchema {
   collectionName: 'awards';
   info: {
@@ -1564,6 +1634,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::alert.alert': ApiAlertAlert;
       'api::award.award': ApiAwardAward;
       'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
       'api::global-settings.global-settings': ApiGlobalSettingsGlobalSettings;
