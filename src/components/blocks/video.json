@@ -1,0 +1,46 @@
+{
+  "collectionName": "components_blocks_videos",
+  "info": {
+    "displayName": "Video",
+    "description": "Embed a video from supported platforms",
+    "icon": "play"
+  },
+  "options": {},
+  "attributes": {
+    "platform": {
+      "type": "enumeration",
+      "required": true,
+      "enum": ["youtube"],
+      "default": "youtube",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Video hosting platform"
+        }
+      }
+    },
+    "videoId": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Video ID (e.g., dQw4w9WgXcQ for YouTube)"
+        }
+      }
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Accessible title describing the video content"
+        }
+      }
+    },
+    "theme": {
+      "type": "enumeration",
+      "required": true,
+      "enum": ["none", "standard", "brighter", "darker", "inherit"],
+      "default": "standard"
+    }
+  }
+}

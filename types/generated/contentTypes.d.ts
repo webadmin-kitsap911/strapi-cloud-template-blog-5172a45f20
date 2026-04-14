@@ -696,6 +696,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.heading',
         'blocks.call-to-action',
         'blocks.embed',
+        'blocks.video',
         'blocks.press-releases',
         'blocks.public-meetings',
         'blocks.group-members',

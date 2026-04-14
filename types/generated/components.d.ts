@@ -435,6 +435,44 @@ export interface BlocksTaxInfoRequest extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksVideo extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_videos';
+  info: {
+    description: 'Embed a video from supported platforms';
+    displayName: 'Video';
+    icon: 'play';
+  };
+  attributes: {
+    platform: Schema.Attribute.Enumeration<['youtube']> &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Video hosting platform';
+        };
+      }> &
+      Schema.Attribute.DefaultTo<'youtube'>;
+    theme: Schema.Attribute.Enumeration<
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Accessible title describing the video content';
+        };
+      }>;
+    videoId: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Video ID (e.g., dQw4w9WgXcQ for YouTube)';
+        };
+      }>;
+  };
+}
+
 export interface ColumnsColumnContent extends Struct.ComponentSchema {
   collectionName: 'components_columns_column_contents';
   info: {
@@ -656,6 +694,7 @@ declare module '@strapi/strapi' {
       'blocks.resource-links': BlocksResourceLinks;
       'blocks.rich-text': BlocksRichText;
       'blocks.tax-info-request': BlocksTaxInfoRequest;
+      'blocks.video': BlocksVideo;
       'columns.column-content': ColumnsColumnContent;
       'home.announcement-item': HomeAnnouncementItem;
       'shared.document-attachment': SharedDocumentAttachment;
