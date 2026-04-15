@@ -37,6 +37,14 @@
       "options": {
         "preset": "defaultHtml"
       }
+    },
+    "searchableContent": {
+      "type": "text",
+      "pluginOptions": {
+        "content-manager": {
+          "visible": false
+        }
+      }
     }
   }
 }

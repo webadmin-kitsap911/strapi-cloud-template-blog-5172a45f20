@@ -722,6 +722,12 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         };
       }>;
     publishedAt: Schema.Attribute.DateTime;
+    searchableContent: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          visible: false;
+        };
+      }>;
     seoDescription: Schema.Attribute.Text;
     seoTitle: Schema.Attribute.String;
     slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
@@ -769,6 +775,12 @@ export interface ApiPressReleasePressRelease
     location: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     releaseLabel: Schema.Attribute.String;
+    searchableContent: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          visible: false;
+        };
+      }>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

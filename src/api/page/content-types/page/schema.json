@@ -78,6 +78,14 @@
     },
     "seoDescription": {
       "type": "text"
+    },
+    "searchableContent": {
+      "type": "text",
+      "pluginOptions": {
+        "content-manager": {
+          "visible": false
+        }
+      }
     }
   }
 }

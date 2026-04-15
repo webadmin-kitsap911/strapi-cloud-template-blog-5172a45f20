@@ -8,4 +8,41 @@ module.exports = () => ({
       i18nEnabled: false,
     },
   },
+  'strapi-algolia': {
+    enabled: !!process.env.ALGOLIA_APP_ID,
+    config: {
+      apiKey: process.env.ALGOLIA_ADMIN_KEY,
+      applicationId: process.env.ALGOLIA_APP_ID,
+      indexPrefix: process.env.ALGOLIA_INDEX_PREFIX || 'kitsap911',
+      contentTypes: [
+        {
+          name: 'api::page.page',
+          index: 'pages',
+          hideFields: [
+            'contentBlocks',
+            'backgroundImage',
+            'parent',
+            'children',
+            'slug',
+            'createdAt',
+            'updatedAt',
+            'publishedAt',
+            'locale',
+          ],
+        },
+        {
+          name: 'api::press-release.press-release',
+          index: 'press_releases',
+          hideFields: [
+            'content',
+            'contacts',
+            'createdAt',
+            'updatedAt',
+            'publishedAt',
+            'locale',
+          ],
+        },
+      ],
+    },
+  },
 });
