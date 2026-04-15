@@ -23,22 +23,6 @@
         }
       }
     },
-    "buttonText": {
-      "type": "string",
-      "pluginOptions": {
-        "content-manager": {
-          "description": "(Deprecated) Text displayed on the button - use links instead"
-        }
-      }
-    },
-    "buttonUrl": {
-      "type": "string",
-      "pluginOptions": {
-        "content-manager": {
-          "description": "(Deprecated) URL the button links to - use links instead"
-        }
-      }
-    },
     "style": {
       "type": "enumeration",
       "enum": ["primary", "secondary", "outline"],
