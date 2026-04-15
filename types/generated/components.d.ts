@@ -26,18 +26,6 @@ export interface BlocksCallToAction extends Struct.ComponentSchema {
     icon: 'bullhorn';
   };
   attributes: {
-    buttonText: Schema.Attribute.String &
-      Schema.Attribute.SetPluginOptions<{
-        'content-manager': {
-          description: '(Deprecated) Text displayed on the button - use links instead';
-        };
-      }>;
-    buttonUrl: Schema.Attribute.String &
-      Schema.Attribute.SetPluginOptions<{
-        'content-manager': {
-          description: '(Deprecated) URL the button links to - use links instead';
-        };
-      }>;
     closingMessage: Schema.Attribute.Text &
       Schema.Attribute.SetPluginOptions<{
         'content-manager': {
