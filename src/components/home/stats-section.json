@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_home_stats_sections",
+  "info": {
+    "displayName": "Stats Section",
+    "description": "Statistics section for the home page"
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "stats": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home.stat-item"
+    },
+    "finalLine": {
+      "type": "richtext"
+    }
+  }
+}

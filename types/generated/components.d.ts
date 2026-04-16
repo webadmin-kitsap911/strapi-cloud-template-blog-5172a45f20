@@ -503,6 +503,37 @@ export interface HomeAnnouncementItem extends Struct.ComponentSchema {
   };
 }
 
+export interface HomeStatItem extends Struct.ComponentSchema {
+  collectionName: 'components_home_stat_items';
+  info: {
+    description: 'A single statistic for the home page stats section';
+    displayName: 'Stat Item';
+  };
+  attributes: {
+    format: Schema.Attribute.Enumeration<
+      ['default', 'big', 'bigNum', 'inverted']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'default'>;
+    icon: Schema.Attribute.String;
+    label: Schema.Attribute.String & Schema.Attribute.Required;
+    value: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface HomeStatsSection extends Struct.ComponentSchema {
+  collectionName: 'components_home_stats_sections';
+  info: {
+    description: 'Statistics section for the home page';
+    displayName: 'Stats Section';
+  };
+  attributes: {
+    finalLine: Schema.Attribute.RichText;
+    stats: Schema.Attribute.Component<'home.stat-item', true>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface SharedDocumentAttachment extends Struct.ComponentSchema {
   collectionName: 'components_shared_document_attachments';
   info: {
@@ -686,6 +717,8 @@ declare module '@strapi/strapi' {
       'blocks.video': BlocksVideo;
       'columns.column-content': ColumnsColumnContent;
       'home.announcement-item': HomeAnnouncementItem;
+      'home.stat-item': HomeStatItem;
+      'home.stats-section': HomeStatsSection;
       'shared.document-attachment': SharedDocumentAttachment;
       'shared.incident': SharedIncident;
       'shared.link': SharedLink;
