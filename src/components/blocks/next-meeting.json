@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_blocks_next_meetings",
+  "info": {
+    "displayName": "Next Meeting",
+    "description": "Displays the next upcoming meeting for a group",
+    "icon": "calendar"
+  },
+  "options": {},
+  "attributes": {
+    "group": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::meeting-group.meeting-group",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "The meeting group to show the next meeting for"
+        }
+      }
+    },
+    "fullListLink": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.link",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Optional link to full meeting list (anchor or page link)"
+        }
+      }
+    },
+    "theme": {
+      "type": "enumeration",
+      "required": true,
+      "enum": ["none", "standard", "brighter", "darker", "inherit"],
+      "default": "standard"
+    }
+  }
+}

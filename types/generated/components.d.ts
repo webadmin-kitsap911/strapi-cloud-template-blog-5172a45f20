@@ -249,6 +249,37 @@ export interface BlocksImage extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksNextMeeting extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_next_meetings';
+  info: {
+    description: 'Displays the next upcoming meeting for a group';
+    displayName: 'Next Meeting';
+    icon: 'calendar';
+  };
+  attributes: {
+    fullListLink: Schema.Attribute.Component<'shared.link', false> &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Optional link to full meeting list (anchor or page link)';
+        };
+      }>;
+    group: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::meeting-group.meeting-group'
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'The meeting group to show the next meeting for';
+        };
+      }>;
+    theme: Schema.Attribute.Enumeration<
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
+  };
+}
+
 export interface BlocksPressReleases extends Struct.ComponentSchema {
   collectionName: 'components_blocks_press_releases';
   info: {
@@ -487,6 +518,7 @@ export interface ColumnsColumnContent extends Struct.ComponentSchema {
         'blocks.press-releases',
         'blocks.group-members',
         'blocks.contact-form',
+        'blocks.next-meeting',
       ]
     >;
   };
@@ -741,6 +773,7 @@ declare module '@strapi/strapi' {
       'blocks.group-members': BlocksGroupMembers;
       'blocks.heading': BlocksHeading;
       'blocks.image': BlocksImage;
+      'blocks.next-meeting': BlocksNextMeeting;
       'blocks.press-releases': BlocksPressReleases;
       'blocks.public-meetings': BlocksPublicMeetings;
       'blocks.public-records-request-form': BlocksPublicRecordsRequestForm;

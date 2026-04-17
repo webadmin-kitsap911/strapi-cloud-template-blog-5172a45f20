@@ -18,7 +18,8 @@
         "blocks.video",
         "blocks.press-releases",
         "blocks.group-members",
-        "blocks.contact-form"
+        "blocks.contact-form",
+        "blocks.next-meeting"
       ]
     }
   }
