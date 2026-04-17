@@ -592,6 +592,12 @@ export interface ApiGlobalSettingsGlobalSettings
       'api::global-settings.global-settings'
     > &
       Schema.Attribute.Private;
+    pressReleasesPage: Schema.Attribute.Relation<'oneToOne', 'api::page.page'> &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Page used as parent for press release detail pages';
+        };
+      }>;
     publishedAt: Schema.Attribute.DateTime;
     socialMediaLinks: Schema.Attribute.Component<
       'shared.social-media-link',
