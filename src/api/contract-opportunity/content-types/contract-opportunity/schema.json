@@ -24,21 +24,8 @@
     },
     "status": {
       "type": "enumeration",
-      "required": true,
-      "enum": [
-        "pre-proposal",
-        "rfi",
-        "rfq",
-        "rfp",
-        "evaluating",
-        "interviewing",
-        "vendor-selected",
-        "project-begun",
-        "project-complete",
-        "paused",
-        "closed-no-selection"
-      ],
-      "default": "rfp"
+      "enum": ["pre-proposal", "rfi", "rfq", "rfp", "evaluating", "interviewing", "vendor-selected", "project-begun", "project-complete", "paused", "closed-no-selection"],
+      "required": true
     },
     "content": {
       "type": "customField",
