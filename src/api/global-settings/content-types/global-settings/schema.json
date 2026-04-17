@@ -20,6 +20,11 @@
       "multiple": false,
       "required": false,
       "allowedTypes": ["images"]
+    },
+    "socialMediaLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.social-media-link"
     }
   }
 }

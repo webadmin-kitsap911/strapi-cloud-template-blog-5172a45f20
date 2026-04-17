@@ -693,6 +693,40 @@ export interface SharedResourceLink extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedSocialMediaLink extends Struct.ComponentSchema {
+  collectionName: 'components_shared_social_media_links';
+  info: {
+    description: 'A link to a social media profile';
+    displayName: 'Social Media Link';
+  };
+  attributes: {
+    platform: Schema.Attribute.Enumeration<
+      [
+        'facebook',
+        'x',
+        'instagram',
+        'linkedin',
+        'youtube',
+        'nextdoor',
+        'threads',
+      ]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Social media platform';
+        };
+      }>;
+    url: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Full URL to the social media profile';
+        };
+      }>;
+  };
+}
+
 export interface StaffTitle extends Struct.ComponentSchema {
   collectionName: 'components_staff_titles';
   info: {
@@ -732,6 +766,7 @@ declare module '@strapi/strapi' {
       'shared.officer': SharedOfficer;
       'shared.person-name': SharedPersonName;
       'shared.resource-link': SharedResourceLink;
+      'shared.social-media-link': SharedSocialMediaLink;
       'staff.title': StaffTitle;
     }
   }

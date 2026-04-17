@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_shared_social_media_links",
+  "info": {
+    "displayName": "Social Media Link",
+    "description": "A link to a social media profile"
+  },
+  "options": {},
+  "attributes": {
+    "platform": {
+      "type": "enumeration",
+      "required": true,
+      "enum": ["facebook", "x", "instagram", "linkedin", "youtube", "nextdoor", "threads"],
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Social media platform"
+        }
+      }
+    },
+    "url": {
+      "type": "string",
+      "required": true,
+      "regex": "^https?://.*",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Full URL to the social media profile"
+        }
+      }
+    }
+  }
+}

@@ -593,6 +593,10 @@ export interface ApiGlobalSettingsGlobalSettings
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    socialMediaLinks: Schema.Attribute.Component<
+      'shared.social-media-link',
+      true
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
