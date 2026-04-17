@@ -23,7 +23,7 @@ function extractSearchableContent(data) {
   const texts = [];
 
   if (data.title) texts.push(data.title);
-  if (data.status) texts.push(data.status.replace(/-/g, ' '));
+  if (data.opportunityStatus) texts.push(data.opportunityStatus.replace(/-/g, ' '));
   if (data.content) texts.push(stripHtml(data.content));
 
   return texts.join(' ').replace(/\s+/g, ' ').trim();

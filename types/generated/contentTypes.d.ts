@@ -609,18 +609,7 @@ export interface ApiContractOpportunityContractOpportunity
           description: 'Short note or teaser displayed in listing views';
         };
       }>;
-    postedDate: Schema.Attribute.Date & Schema.Attribute.Required;
-    publishedAt: Schema.Attribute.DateTime;
-    searchableContent: Schema.Attribute.Text &
-      Schema.Attribute.SetPluginOptions<{
-        'content-manager': {
-          visible: false;
-        };
-      }>;
-    slug: Schema.Attribute.UID<'title'> &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
-    status: Schema.Attribute.Enumeration<
+    opportunityStatus: Schema.Attribute.Enumeration<
       [
         'pre-proposal',
         'rfi',
@@ -634,7 +623,19 @@ export interface ApiContractOpportunityContractOpportunity
         'paused',
         'closed-no-selection',
       ]
-    >;
+    > &
+      Schema.Attribute.Required;
+    postedDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    searchableContent: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          visible: false;
+        };
+      }>;
+    slug: Schema.Attribute.UID<'title'> &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

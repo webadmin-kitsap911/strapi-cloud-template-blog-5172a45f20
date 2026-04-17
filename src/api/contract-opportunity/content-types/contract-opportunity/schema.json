@@ -22,9 +22,10 @@
       "required": true,
       "unique": true
     },
-    "status": {
+    "opportunityStatus": {
       "type": "enumeration",
-      "enum": ["pre-proposal", "rfi", "rfq", "rfp", "evaluating", "interviewing", "vendor-selected", "project-begun", "project-complete", "paused", "closed-no-selection"]
+      "enum": ["pre-proposal", "rfi", "rfq", "rfp", "evaluating", "interviewing", "vendor-selected", "project-begun", "project-complete", "paused", "closed-no-selection"],
+      "required": true
     },
     "content": {
       "type": "customField",
