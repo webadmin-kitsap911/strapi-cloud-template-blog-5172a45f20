@@ -656,6 +656,7 @@ export interface ApiGlobalSettingsGlobalSettings
     draftAndPublish: false;
   };
   attributes: {
+    contractOpportunitiesBackgroundImage: Schema.Attribute.Media<'images'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

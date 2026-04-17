@@ -35,6 +35,12 @@
           "description": "Page used as parent for press release detail pages"
         }
       }
+    },
+    "contractOpportunitiesBackgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
     }
   }
 }
