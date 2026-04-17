@@ -634,8 +634,7 @@ export interface ApiContractOpportunityContractOpportunity
         'paused',
         'closed-no-selection',
       ]
-    > &
-      Schema.Attribute.Required;
+    >;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
