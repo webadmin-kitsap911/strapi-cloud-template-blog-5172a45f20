@@ -1,0 +1,48 @@
+{
+  "collectionName": "components_blocks_contract_opportunities",
+  "info": {
+    "displayName": "Contract Opportunities",
+    "description": "Display a list of contract opportunities (RFIs, RFQs, RFPs)",
+    "icon": "briefcase"
+  },
+  "options": {},
+  "attributes": {
+    "limit": {
+      "type": "integer",
+      "min": 1,
+      "max": 50,
+      "default": 10,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Maximum number of opportunities to show"
+        }
+      }
+    },
+    "filterByStatuses": {
+      "type": "enumeration",
+      "required": true,
+      "enum": ["open", "in-progress", "closed", "all"],
+      "default": "open",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Filter by status category: open (pre-proposal, rfi, rfq, rfp), in-progress (evaluating, interviewing, vendor-selected, project-begun), closed (project-complete, paused, closed-no-selection), or all"
+        }
+      }
+    },
+    "showClosingDate": {
+      "type": "boolean",
+      "default": true,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Show the closing date for each opportunity"
+        }
+      }
+    },
+    "theme": {
+      "type": "enumeration",
+      "required": true,
+      "enum": ["none", "standard", "brighter", "darker", "inherit"],
+      "default": "standard"
+    }
+  }
+}

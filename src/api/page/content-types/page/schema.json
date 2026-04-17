@@ -65,7 +65,8 @@
         "blocks.awards",
         "blocks.tax-info-request",
         "blocks.resource-links",
-        "blocks.next-meeting"
+        "blocks.next-meeting",
+        "blocks.contract-opportunities"
       ]
     },
     "backgroundImage": {

@@ -108,6 +108,53 @@ export interface BlocksContactForm extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksContractOpportunities extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_contract_opportunities';
+  info: {
+    description: 'Display a list of contract opportunities (RFIs, RFQs, RFPs)';
+    displayName: 'Contract Opportunities';
+    icon: 'briefcase';
+  };
+  attributes: {
+    filterByStatuses: Schema.Attribute.Enumeration<
+      ['open', 'in-progress', 'closed', 'all']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Filter by status category: open (pre-proposal, rfi, rfq, rfp), in-progress (evaluating, interviewing, vendor-selected, project-begun), closed (project-complete, paused, closed-no-selection), or all';
+        };
+      }> &
+      Schema.Attribute.DefaultTo<'open'>;
+    limit: Schema.Attribute.Integer &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Maximum number of opportunities to show';
+        };
+      }> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 50;
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<10>;
+    showClosingDate: Schema.Attribute.Boolean &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Show the closing date for each opportunity';
+        };
+      }> &
+      Schema.Attribute.DefaultTo<true>;
+    theme: Schema.Attribute.Enumeration<
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
+  };
+}
+
 export interface BlocksEmbed extends Struct.ComponentSchema {
   collectionName: 'components_blocks_embeds';
   info: {
@@ -769,6 +816,7 @@ declare module '@strapi/strapi' {
       'blocks.call-to-action': BlocksCallToAction;
       'blocks.columns': BlocksColumns;
       'blocks.contact-form': BlocksContactForm;
+      'blocks.contract-opportunities': BlocksContractOpportunities;
       'blocks.embed': BlocksEmbed;
       'blocks.group-members': BlocksGroupMembers;
       'blocks.heading': BlocksHeading;

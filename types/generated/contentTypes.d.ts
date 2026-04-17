@@ -568,6 +568,80 @@ export interface ApiContactSubmissionContactSubmission
   };
 }
 
+export interface ApiContractOpportunityContractOpportunity
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'contract_opportunities';
+  info: {
+    description: 'RFIs, RFQs, RFPs and other contract opportunities for vendors';
+    displayName: 'Contract Opportunity';
+    pluralName: 'contract-opportunities';
+    singularName: 'contract-opportunity';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    closingDate: Schema.Attribute.DateTime;
+    contacts: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::staff-member.staff-member'
+    >;
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    documents: Schema.Attribute.Component<'shared.document-attachment', true>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::contract-opportunity.contract-opportunity'
+    > &
+      Schema.Attribute.Private;
+    note: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Short note or teaser displayed in listing views';
+        };
+      }>;
+    postedDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    searchableContent: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          visible: false;
+        };
+      }>;
+    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    status: Schema.Attribute.Enumeration<
+      [
+        'pre-proposal',
+        'RFI',
+        'RFQ',
+        'RFP',
+        'evaluating',
+        'interviewing',
+        'vendor-selected',
+        'project-begun',
+        'project-complete',
+        'paused',
+        'closed-no-selection',
+      ]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'RFP'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGlobalSettingsGlobalSettings
   extends Struct.SingleTypeSchema {
   collectionName: 'global_settings';
@@ -718,6 +792,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
         'blocks.tax-info-request',
         'blocks.resource-links',
         'blocks.next-meeting',
+        'blocks.contract-opportunities',
       ]
     >;
     createdAt: Schema.Attribute.DateTime;
@@ -1662,6 +1737,7 @@ declare module '@strapi/strapi' {
       'api::alert.alert': ApiAlertAlert;
       'api::award.award': ApiAwardAward;
       'api::contact-submission.contact-submission': ApiContactSubmissionContactSubmission;
+      'api::contract-opportunity.contract-opportunity': ApiContractOpportunityContractOpportunity;
       'api::global-settings.global-settings': ApiGlobalSettingsGlobalSettings;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::meeting-group.meeting-group': ApiMeetingGroupMeetingGroup;

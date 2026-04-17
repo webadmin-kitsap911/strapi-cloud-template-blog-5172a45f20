@@ -1,0 +1,83 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contract_opportunities",
+  "info": {
+    "singularName": "contract-opportunity",
+    "pluralName": "contract-opportunities",
+    "displayName": "Contract Opportunity",
+    "description": "RFIs, RFQs, RFPs and other contract opportunities for vendors"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "status": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "pre-proposal",
+        "RFI",
+        "RFQ",
+        "RFP",
+        "evaluating",
+        "interviewing",
+        "vendor-selected",
+        "project-begun",
+        "project-complete",
+        "paused",
+        "closed-no-selection"
+      ],
+      "default": "RFP"
+    },
+    "content": {
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "contacts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::staff-member.staff-member"
+    },
+    "documents": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.document-attachment"
+    },
+    "postedDate": {
+      "type": "date",
+      "required": true
+    },
+    "closingDate": {
+      "type": "datetime"
+    },
+    "note": {
+      "type": "string",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Short note or teaser displayed in listing views"
+        }
+      }
+    },
+    "searchableContent": {
+      "type": "text",
+      "pluginOptions": {
+        "content-manager": {
+          "visible": false
+        }
+      }
+    }
+  }
+}
