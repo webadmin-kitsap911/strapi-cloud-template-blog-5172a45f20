@@ -19,16 +19,17 @@
     "slug": {
       "type": "uid",
       "targetField": "title",
-      "required": true
+      "required": true,
+      "unique": true
     },
     "status": {
       "type": "enumeration",
       "required": true,
       "enum": [
         "pre-proposal",
-        "RFI",
-        "RFQ",
-        "RFP",
+        "rfi",
+        "rfq",
+        "rfp",
         "evaluating",
         "interviewing",
         "vendor-selected",
@@ -37,7 +38,7 @@
         "paused",
         "closed-no-selection"
       ],
-      "default": "RFP"
+      "default": "rfp"
     },
     "content": {
       "type": "customField",

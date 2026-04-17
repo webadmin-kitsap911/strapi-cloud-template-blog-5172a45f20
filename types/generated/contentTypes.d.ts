@@ -617,13 +617,15 @@ export interface ApiContractOpportunityContractOpportunity
           visible: false;
         };
       }>;
-    slug: Schema.Attribute.UID<'title'> & Schema.Attribute.Required;
+    slug: Schema.Attribute.UID<'title'> &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     status: Schema.Attribute.Enumeration<
       [
         'pre-proposal',
-        'RFI',
-        'RFQ',
-        'RFP',
+        'rfi',
+        'rfq',
+        'rfp',
         'evaluating',
         'interviewing',
         'vendor-selected',
@@ -634,7 +636,7 @@ export interface ApiContractOpportunityContractOpportunity
       ]
     > &
       Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'RFP'>;
+      Schema.Attribute.DefaultTo<'rfp'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -981,6 +983,7 @@ export interface ApiStaffMemberStaffMember extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    email: Schema.Attribute.Email;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',

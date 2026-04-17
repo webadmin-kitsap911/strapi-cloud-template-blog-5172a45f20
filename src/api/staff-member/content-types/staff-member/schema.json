@@ -19,6 +19,9 @@
     "phone": {
       "type": "string"
     },
+    "email": {
+      "type": "email"
+    },
     "titles": {
       "type": "component",
       "repeatable": true,
