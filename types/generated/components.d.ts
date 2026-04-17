@@ -116,6 +116,13 @@ export interface BlocksEmbed extends Struct.ComponentSchema {
     icon: 'code';
   };
   attributes: {
+    fullBleed: Schema.Attribute.Boolean &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Extend embed into page margins';
+        };
+      }> &
+      Schema.Attribute.DefaultTo<false>;
     theme: Schema.Attribute.Enumeration<
       ['none', 'standard', 'brighter', 'darker', 'inherit']
     > &

@@ -24,6 +24,15 @@
         }
       }
     },
+    "fullBleed": {
+      "type": "boolean",
+      "default": false,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Extend embed into page margins"
+        }
+      }
+    },
     "theme": {
       "type": "enumeration",
       "required": true,
