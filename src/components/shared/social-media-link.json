@@ -9,7 +9,7 @@
     "platform": {
       "type": "enumeration",
       "required": true,
-      "enum": ["facebook", "x", "instagram", "linkedin", "youtube", "nextdoor", "threads"],
+      "enum": ["facebook", "instagram", "linkedin", "youtube", "nextdoor", "threads"],
       "pluginOptions": {
         "content-manager": {
           "description": "Social media platform"

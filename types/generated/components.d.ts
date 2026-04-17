@@ -701,15 +701,7 @@ export interface SharedSocialMediaLink extends Struct.ComponentSchema {
   };
   attributes: {
     platform: Schema.Attribute.Enumeration<
-      [
-        'facebook',
-        'x',
-        'instagram',
-        'linkedin',
-        'youtube',
-        'nextdoor',
-        'threads',
-      ]
+      ['facebook', 'instagram', 'linkedin', 'youtube', 'nextdoor', 'threads']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
