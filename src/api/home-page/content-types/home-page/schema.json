@@ -20,6 +20,11 @@
       "type": "component",
       "repeatable": false,
       "component": "home.stats-section"
+    },
+    "culture": {
+      "type": "component",
+      "repeatable": false,
+      "component": "home.culture-section"
     }
   }
 }

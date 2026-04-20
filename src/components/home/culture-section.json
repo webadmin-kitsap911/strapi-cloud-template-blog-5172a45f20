@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_home_culture_sections",
+  "info": {
+    "displayName": "Culture Section",
+    "description": "Culture section for the home page"
+  },
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true,
+      "default": "Our Culture"
+    },
+    "content": {
+      "type": "richtext",
+      "required": true,
+      "pluginOptions": {
+        "ckeditor5": {
+          "preset": "default"
+        }
+      }
+    },
+    "image": {
+      "type": "media",
+      "allowedTypes": ["images"],
+      "multiple": false
+    }
+  }
+}

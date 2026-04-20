@@ -24,7 +24,7 @@
     },
     "slot": {
       "type": "enumeration",
-      "enum": ["featured", "top-left", "top-right", "middle-left", "middle-right", "bottom-left", "bottom-right"]
+      "enum": ["featured", "top-left", "top-right", "middle-left", "middle-right", "bottom-left", "bottom-center", "bottom-right"]
     }
   }
 }
