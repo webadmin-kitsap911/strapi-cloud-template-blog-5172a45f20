@@ -19,7 +19,8 @@
         "blocks.press-releases",
         "blocks.group-members",
         "blocks.contact-form",
-        "blocks.next-meeting"
+        "blocks.next-meeting",
+        "blocks.resource-links"
       ]
     }
   }

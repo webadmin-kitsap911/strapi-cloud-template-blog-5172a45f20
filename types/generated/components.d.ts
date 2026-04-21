@@ -566,6 +566,7 @@ export interface ColumnsColumnContent extends Struct.ComponentSchema {
         'blocks.group-members',
         'blocks.contact-form',
         'blocks.next-meeting',
+        'blocks.resource-links',
       ]
     >;
   };
@@ -589,6 +590,27 @@ export interface HomeAnnouncementItem extends Struct.ComponentSchema {
   };
 }
 
+export interface HomeCultureSection extends Struct.ComponentSchema {
+  collectionName: 'components_home_culture_sections';
+  info: {
+    description: 'Culture section for the home page';
+    displayName: 'Culture Section';
+  };
+  attributes: {
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        ckeditor5: {
+          preset: 'default';
+        };
+      }>;
+    heading: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'Our Culture'>;
+    image: Schema.Attribute.Media<'images'>;
+  };
+}
+
 export interface HomeStatItem extends Struct.ComponentSchema {
   collectionName: 'components_home_stat_items';
   info: {
@@ -603,6 +625,18 @@ export interface HomeStatItem extends Struct.ComponentSchema {
       Schema.Attribute.DefaultTo<'default'>;
     icon: Schema.Attribute.String;
     label: Schema.Attribute.String & Schema.Attribute.Required;
+    slot: Schema.Attribute.Enumeration<
+      [
+        'featured',
+        'top-left',
+        'top-right',
+        'middle-left',
+        'middle-right',
+        'bottom-left',
+        'bottom-center',
+        'bottom-right',
+      ]
+    >;
     value: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -831,6 +865,7 @@ declare module '@strapi/strapi' {
       'blocks.video': BlocksVideo;
       'columns.column-content': ColumnsColumnContent;
       'home.announcement-item': HomeAnnouncementItem;
+      'home.culture-section': HomeCultureSection;
       'home.stat-item': HomeStatItem;
       'home.stats-section': HomeStatsSection;
       'shared.document-attachment': SharedDocumentAttachment;
