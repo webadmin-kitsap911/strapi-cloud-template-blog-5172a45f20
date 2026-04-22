@@ -11,6 +11,22 @@ module.exports = [
   },
   {
     method: 'POST',
+    path: '/totp/setup-with-session/begin',
+    handler: 'totp.setupBeginWithSession',
+    config: {
+      auth: false,
+    },
+  },
+  {
+    method: 'POST',
+    path: '/totp/setup-with-session/complete',
+    handler: 'totp.setupCompleteWithSession',
+    config: {
+      auth: false,
+    },
+  },
+  {
+    method: 'POST',
     path: '/totp/setup/begin',
     handler: 'totp.setupBegin',
     config: {

@@ -108,6 +108,158 @@ module.exports = ({ strapi }) => ({
     };
   },
 
+  // Setup TOTP using session token (for users who need to set up TOTP before first login)
+  async setupBeginWithSession(ctx) {
+    const { totpSessionToken } = ctx.request.body;
+
+    if (!totpSessionToken) {
+      return ctx.badRequest('Missing totpSessionToken');
+    }
+
+    const sessionService = strapi.plugin('admin-totp').service('session');
+
+    // Validate the session
+    const sessionResult = await sessionService.validate(totpSessionToken);
+    if (!sessionResult.valid) {
+      return ctx.badRequest(sessionResult.reason);
+    }
+
+    const { session } = sessionResult;
+    const userId = session.adminUserId;
+
+    // Verify user needs setup (required but not enabled)
+    const totpService = strapi.plugin('admin-totp').service('totp');
+    const user = await totpService.getAdminUser(userId);
+
+    if (!user) {
+      return ctx.badRequest('User not found');
+    }
+
+    if (!user.totp_required) {
+      return ctx.badRequest('TOTP is not required for this user');
+    }
+
+    if (user.totp_enabled) {
+      return ctx.badRequest('TOTP is already enabled');
+    }
+
+    try {
+      const result = await totpService.setupBegin(userId);
+
+      ctx.body = {
+        data: {
+          qrCode: result.qrCode,
+          secret: result.secret,
+        },
+      };
+    } catch (error) {
+      return ctx.badRequest(error.message);
+    }
+  },
+
+  // Complete TOTP setup using session token and issue JWT
+  async setupCompleteWithSession(ctx) {
+    const { totpSessionToken, code } = ctx.request.body;
+
+    if (!totpSessionToken || !code) {
+      return ctx.badRequest('Missing totpSessionToken or code');
+    }
+
+    const sessionService = strapi.plugin('admin-totp').service('session');
+
+    // Validate the session
+    const sessionResult = await sessionService.validate(totpSessionToken);
+    if (!sessionResult.valid) {
+      return ctx.badRequest(sessionResult.reason);
+    }
+
+    const { session } = sessionResult;
+    const userId = session.adminUserId;
+
+    const totpService = strapi.plugin('admin-totp').service('totp');
+    const user = await totpService.getAdminUser(userId);
+
+    if (!user) {
+      return ctx.badRequest('User not found');
+    }
+
+    try {
+      // Complete the setup
+      const result = await totpService.setupComplete(userId, code);
+
+      // Mark session as used
+      await sessionService.markUsed(totpSessionToken);
+
+      // Get the full admin user for token generation
+      const fullUser = await strapi.db.query('admin::user').findOne({
+        where: { id: userId },
+        populate: ['roles'],
+      });
+
+      // Use Strapi's session manager to create proper tokens
+      const crypto = require('crypto');
+      const sessionManager = strapi.sessionManager;
+
+      if (!sessionManager) {
+        return ctx.internalServerError('Session manager not available');
+      }
+
+      const deviceId = crypto.randomUUID();
+
+      // Generate refresh token
+      const { token: refreshToken } = await sessionManager('admin').generateRefreshToken(
+        String(userId),
+        deviceId,
+        { type: 'session' }
+      );
+
+      // Generate access token from refresh token
+      const accessResult = await sessionManager('admin').generateAccessToken(refreshToken);
+      if ('error' in accessResult) {
+        return ctx.internalServerError('Failed to generate access token');
+      }
+
+      const { token: accessToken } = accessResult;
+
+      // Set cookies
+      const isProduction = process.env.NODE_ENV === 'production';
+      const path = strapi.config.get('admin.auth.cookie.path', '/admin');
+      const domain = strapi.config.get('admin.auth.cookie.domain') || strapi.config.get('admin.auth.domain');
+      const sameSite = strapi.config.get('admin.auth.cookie.sameSite') ?? 'lax';
+
+      ctx.cookies.set('strapi_admin_refresh', refreshToken, {
+        httpOnly: true,
+        secure: isProduction && ctx.request.secure,
+        overwrite: true,
+        domain,
+        path,
+        sameSite,
+      });
+
+      ctx.cookies.set('jwtToken', accessToken, {
+        httpOnly: false,
+        secure: isProduction && ctx.request.secure,
+        path,
+        domain,
+        sameSite,
+        overwrite: true,
+      });
+
+      strapi.log.info(`[admin-totp] TOTP setup complete for user ${userId}, issuing tokens`);
+
+      ctx.body = {
+        data: {
+          token: accessToken,
+          user: strapi.admin.services.user.sanitizeUser(fullUser),
+          backupCodes: result.backupCodes,
+        },
+      };
+    } catch (error) {
+      await sessionService.incrementAttempts(totpSessionToken);
+      return ctx.badRequest(error.message);
+    }
+  },
+
   async setupBegin(ctx) {
     const userId = ctx.state.user?.id;
 

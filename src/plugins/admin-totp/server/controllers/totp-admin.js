@@ -1,5 +1,18 @@
 'use strict';
 
+// Helper to check if user has a specific permission
+const hasPermission = async (strapi, user, action) => {
+  const permissionService = strapi.admin.services.permission;
+
+  // Get user's permissions
+  const userPermissions = await permissionService.findUserPermissions(user);
+
+  // Check if user has the specific action permission
+  return userPermissions.some(
+    (permission) => permission.action === `plugin::admin-totp.${action}`
+  );
+};
+
 module.exports = ({ strapi }) => ({
   async setRequired(ctx) {
     const { id } = ctx.params;
@@ -9,14 +22,10 @@ module.exports = ({ strapi }) => ({
       return ctx.unauthorized('Must be authenticated');
     }
 
-    // Check if current user has permission to manage users
-    const currentUser = ctx.state.user;
-    const isSuperAdmin = currentUser.roles?.some(
-      (role) => role.code === 'strapi-super-admin'
-    );
-
-    if (!isSuperAdmin) {
-      return ctx.forbidden('Only super admins can require TOTP for users');
+    // Check if current user has permission
+    const canRequire = await hasPermission(strapi, ctx.state.user, 'users.require');
+    if (!canRequire) {
+      return ctx.forbidden('You do not have permission to require TOTP for users');
     }
 
     if (typeof required !== 'boolean') {
@@ -53,14 +62,10 @@ module.exports = ({ strapi }) => ({
       return ctx.unauthorized('Must be authenticated');
     }
 
-    // Check if current user has permission to manage users
-    const currentUser = ctx.state.user;
-    const isSuperAdmin = currentUser.roles?.some(
-      (role) => role.code === 'strapi-super-admin'
-    );
-
-    if (!isSuperAdmin) {
-      return ctx.forbidden('Only super admins can reset TOTP for users');
+    // Check if current user has permission
+    const canReset = await hasPermission(strapi, ctx.state.user, 'users.reset');
+    if (!canReset) {
+      return ctx.forbidden('You do not have permission to reset TOTP for users');
     }
 
     try {
@@ -101,14 +106,10 @@ module.exports = ({ strapi }) => ({
       return ctx.unauthorized('Must be authenticated');
     }
 
-    // Check if current user has permission to view users
-    const currentUser = ctx.state.user;
-    const isSuperAdmin = currentUser.roles?.some(
-      (role) => role.code === 'strapi-super-admin'
-    );
-
-    if (!isSuperAdmin) {
-      return ctx.forbidden('Only super admins can view TOTP status for users');
+    // Check if current user has permission
+    const canRead = await hasPermission(strapi, ctx.state.user, 'users.read');
+    if (!canRead) {
+      return ctx.forbidden('You do not have permission to view TOTP status for users');
     }
 
     try {
@@ -120,6 +121,73 @@ module.exports = ({ strapi }) => ({
           id: parseInt(id, 10),
           ...status,
         },
+      };
+    } catch (error) {
+      return ctx.badRequest(error.message);
+    }
+  },
+
+  // Endpoint to check current user's permissions for admin TOTP management
+  async getPermissions(ctx) {
+    if (!ctx.state.user?.id) {
+      return ctx.unauthorized('Must be authenticated');
+    }
+
+    const [canRead, canRequire, canReset] = await Promise.all([
+      hasPermission(strapi, ctx.state.user, 'users.read'),
+      hasPermission(strapi, ctx.state.user, 'users.require'),
+      hasPermission(strapi, ctx.state.user, 'users.reset'),
+    ]);
+
+    ctx.body = {
+      data: {
+        canRead,
+        canRequire,
+        canReset,
+        canManageUsers: canRead || canRequire || canReset,
+      },
+    };
+  },
+
+  // List all admin users with their TOTP status
+  async listUsers(ctx) {
+    if (!ctx.state.user?.id) {
+      return ctx.unauthorized('Must be authenticated');
+    }
+
+    // Check if current user has permission to read
+    const canRead = await hasPermission(strapi, ctx.state.user, 'users.read');
+    if (!canRead) {
+      return ctx.forbidden('You do not have permission to view users');
+    }
+
+    try {
+      const totpService = strapi.plugin('admin-totp').service('totp');
+      const knex = strapi.db.connection;
+
+      // Get all admin users with basic info and TOTP fields
+      const users = await knex('admin_users')
+        .select(
+          'id',
+          'email',
+          'firstname',
+          'lastname',
+          'is_active',
+          'totp_enabled',
+          'totp_required'
+        )
+        .orderBy('firstname', 'asc');
+
+      ctx.body = {
+        data: users.map((user) => ({
+          id: user.id,
+          email: user.email,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          isActive: user.is_active,
+          totp_enabled: !!user.totp_enabled,
+          totp_required: !!user.totp_required,
+        })),
       };
     } catch (error) {
       return ctx.badRequest(error.message);

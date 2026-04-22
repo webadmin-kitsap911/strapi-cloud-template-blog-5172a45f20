@@ -1,6 +1,10 @@
 'use strict';
 
+const { actions } = require('./config/actions');
+
 module.exports = async ({ strapi }) => {
+  // Register plugin permissions
+  await strapi.admin.services.permission.actionProvider.registerMany(actions);
   // Add TOTP columns to admin_users table
   const knex = strapi.db.connection;
 

@@ -103,6 +103,240 @@ const customHtmlPreset = {
   },
 };
 
+// TOTP setup UI for users who need to set up TOTP
+const showTotpSetupUI = async (session: {
+  totpSessionToken: string;
+  expiresAt: string;
+  user: { email: string };
+}) => {
+  // Create overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'totp-setup-overlay';
+  overlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #f6f6f9;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `;
+
+  overlay.innerHTML = `
+    <div style="
+      background: white;
+      padding: 32px;
+      border-radius: 4px;
+      box-shadow: 0 1px 4px rgba(33, 33, 52, 0.1);
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    ">
+      <h2 style="margin: 0 0 8px 0; font-size: 24px; font-weight: 600;">Set Up Two-Factor Authentication</h2>
+      <p style="margin: 0 0 24px 0; color: #666;">Your administrator requires two-factor authentication for your account.</p>
+      <div id="setup-loading" style="padding: 40px 0;">
+        <p style="color: #666;">Loading setup...</p>
+      </div>
+      <div id="setup-content" style="display: none;"></div>
+      <div id="backup-codes-content" style="display: none;"></div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  // Fetch QR code
+  try {
+    const response = await fetch('/admin-totp/totp/setup-with-session/begin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ totpSessionToken: session.totpSessionToken }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data?.error?.message || 'Failed to start setup');
+    }
+
+    const { qrCode, secret } = data.data;
+
+    // Show setup form
+    const loadingEl = document.getElementById('setup-loading');
+    const contentEl = document.getElementById('setup-content');
+    if (loadingEl) loadingEl.style.display = 'none';
+    if (contentEl) {
+      contentEl.style.display = 'block';
+      contentEl.innerHTML = `
+        <div style="margin-bottom: 20px;">
+          <p style="margin: 0 0 16px 0; font-size: 14px; color: #666;">
+            Scan this QR code with your authenticator app (Google Authenticator, Authy, 1Password, etc.)
+          </p>
+          <img src="${qrCode}" alt="QR Code" style="max-width: 200px; margin: 0 auto; display: block;" />
+          <p style="margin: 16px 0 0 0; font-size: 12px; color: #888;">
+            Or enter this code manually: <code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">${secret}</code>
+          </p>
+        </div>
+        <form id="setup-form">
+          <div style="margin-bottom: 16px; text-align: left;">
+            <label style="display: block; margin-bottom: 4px; font-size: 14px; font-weight: 500;">
+              Verification Code
+            </label>
+            <input
+              type="text"
+              id="setup-code"
+              placeholder="Enter 6-digit code"
+              autocomplete="one-time-code"
+              autofocus
+              style="
+                width: 100%;
+                padding: 10px 12px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 16px;
+                box-sizing: border-box;
+              "
+            />
+            <p style="margin: 4px 0 0 0; font-size: 12px; color: #888;">
+              Enter the 6-digit code from your authenticator app to verify setup
+            </p>
+            <p id="setup-error" style="margin: 4px 0 0 0; font-size: 12px; color: #d02b20; display: none;"></p>
+          </div>
+          <div style="display: flex; gap: 8px; justify-content: flex-end;">
+            <button type="button" id="setup-cancel" style="
+              padding: 10px 20px;
+              border: 1px solid #ddd;
+              background: white;
+              border-radius: 4px;
+              cursor: pointer;
+              font-size: 14px;
+            ">Cancel</button>
+            <button type="submit" id="setup-submit" style="
+              padding: 10px 20px;
+              border: none;
+              background: #4945ff;
+              color: white;
+              border-radius: 4px;
+              cursor: pointer;
+              font-size: 14px;
+            ">Enable</button>
+          </div>
+        </form>
+      `;
+
+      // Handle cancel
+      document.getElementById('setup-cancel')?.addEventListener('click', () => {
+        sessionStorage.removeItem('totpSession');
+        overlay.remove();
+        window.location.href = '/admin/auth/login';
+      });
+
+      // Handle form submit
+      document.getElementById('setup-form')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const codeInput = document.getElementById('setup-code') as HTMLInputElement;
+        const errorEl = document.getElementById('setup-error') as HTMLElement;
+        const submitBtn = document.getElementById('setup-submit') as HTMLButtonElement;
+
+        const code = codeInput?.value?.trim();
+        if (!code || code.length !== 6) {
+          errorEl.textContent = 'Please enter a valid 6-digit code';
+          errorEl.style.display = 'block';
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Enabling...';
+        errorEl.style.display = 'none';
+
+        try {
+          const completeResponse = await fetch('/admin-totp/totp/setup-with-session/complete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              totpSessionToken: session.totpSessionToken,
+              code,
+            }),
+          });
+
+          const completeData = await completeResponse.json();
+
+          if (!completeResponse.ok) {
+            throw new Error(completeData?.error?.message || 'Setup failed');
+          }
+
+          // Show backup codes
+          const setupContentEl = document.getElementById('setup-content');
+          const backupCodesEl = document.getElementById('backup-codes-content');
+          if (setupContentEl) setupContentEl.style.display = 'none';
+          if (backupCodesEl) {
+            backupCodesEl.style.display = 'block';
+            backupCodesEl.innerHTML = `
+              <h3 style="margin: 0 0 16px 0; font-size: 18px; font-weight: 600; color: #32324d;">Save Your Backup Codes</h3>
+              <p style="margin: 0 0 16px 0; font-size: 14px; color: #666;">
+                Store these codes securely. You can use them to access your account if you lose your authenticator device.
+              </p>
+              <div style="
+                background: #f6f6f9;
+                padding: 16px;
+                border-radius: 4px;
+                margin-bottom: 16px;
+                font-family: monospace;
+                font-size: 14px;
+                text-align: left;
+              ">
+                ${completeData.data.backupCodes.map((code: string) => `<div style="padding: 4px 0;">${code}</div>`).join('')}
+              </div>
+              <button id="backup-continue" style="
+                padding: 10px 24px;
+                border: none;
+                background: #4945ff;
+                color: white;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+              ">I've saved these codes - Continue</button>
+            `;
+
+            document.getElementById('backup-continue')?.addEventListener('click', () => {
+              sessionStorage.removeItem('totpSession');
+              overlay.remove();
+              window.location.href = '/admin';
+            });
+          }
+        } catch (err: any) {
+          errorEl.textContent = err.message || 'Setup failed';
+          errorEl.style.display = 'block';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enable';
+        }
+      });
+    }
+  } catch (err: any) {
+    const loadingEl = document.getElementById('setup-loading');
+    if (loadingEl) {
+      loadingEl.innerHTML = `
+        <p style="color: #d02b20; margin-bottom: 16px;">${err.message || 'Failed to start setup'}</p>
+        <button id="setup-back" style="
+          padding: 10px 20px;
+          border: 1px solid #ddd;
+          background: white;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 14px;
+        ">Back to Login</button>
+      `;
+      document.getElementById('setup-back')?.addEventListener('click', () => {
+        sessionStorage.removeItem('totpSession');
+        overlay.remove();
+        window.location.href = '/admin/auth/login';
+      });
+    }
+  }
+};
+
 // TOTP verification UI
 const showTotpVerificationUI = (session: {
   totpSessionToken: string;
@@ -110,6 +344,12 @@ const showTotpVerificationUI = (session: {
   user: { email: string };
   needsSetup: boolean;
 }) => {
+  // If user needs to set up TOTP, show setup UI instead
+  if (session.needsSetup) {
+    showTotpSetupUI(session);
+    return;
+  }
+
   // Create overlay
   const overlay = document.createElement('div');
   overlay.id = 'totp-verify-overlay';
@@ -126,23 +366,16 @@ const showTotpVerificationUI = (session: {
     justify-content: center;
   `;
 
-  const content = session.needsSetup
-    ? `
-      <h2 style="margin: 0 0 16px 0; font-size: 24px; font-weight: 600;">Two-Factor Authentication Required</h2>
-      <p style="margin: 0 0 24px 0; color: #666;">
-        Your administrator requires you to set up two-factor authentication.
-        Please contact your administrator for assistance.
-      </p>
-      <button id="totp-cancel" style="
-        padding: 10px 20px;
-        border: 1px solid #ddd;
-        background: white;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-      ">Back to Login</button>
-    `
-    : `
+  overlay.innerHTML = `
+    <div style="
+      background: white;
+      padding: 32px;
+      border-radius: 4px;
+      box-shadow: 0 1px 4px rgba(33, 33, 52, 0.1);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    ">
       <h2 style="margin: 0 0 8px 0; font-size: 24px; font-weight: 600;">Two-Factor Authentication</h2>
       <p style="margin: 0 0 24px 0; color: #666;">Enter the code for ${session.user.email}</p>
       <form id="totp-form">
@@ -190,19 +423,6 @@ const showTotpVerificationUI = (session: {
           ">Verify</button>
         </div>
       </form>
-    `;
-
-  overlay.innerHTML = `
-    <div style="
-      background: white;
-      padding: 32px;
-      border-radius: 4px;
-      box-shadow: 0 1px 4px rgba(33, 33, 52, 0.1);
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
-    ">
-      ${content}
     </div>
   `;
 

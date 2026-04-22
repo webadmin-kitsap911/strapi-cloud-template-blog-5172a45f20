@@ -45,6 +45,13 @@ type SetupData = {
   secret: string;
 };
 
+type AdminPermissions = {
+  canRead: boolean;
+  canRequire: boolean;
+  canReset: boolean;
+  canManageUsers: boolean;
+};
+
 export const HomePage = () => {
   const { get, post, put } = useFetchClient();
   const { toggleNotification } = useNotification();
@@ -69,9 +76,24 @@ export const HomePage = () => {
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
   const [isRequireModalOpen, setIsRequireModalOpen] = useState(false);
 
-  const isSuperAdmin = currentUser?.roles?.some(
-    (role: any) => role.code === 'strapi-super-admin'
-  );
+  // Permissions state
+  const [permissions, setPermissions] = useState<AdminPermissions>({
+    canRead: false,
+    canRequire: false,
+    canReset: false,
+    canManageUsers: false,
+  });
+
+  const fetchPermissions = async () => {
+    try {
+      const { data } = await get('/admin-totp/totp/permissions');
+      setPermissions(data.data);
+      return data.data;
+    } catch (error) {
+      // User doesn't have any admin permissions
+      return null;
+    }
+  };
 
   const fetchStatus = async () => {
     try {
@@ -88,33 +110,11 @@ export const HomePage = () => {
   };
 
   const fetchAdminUsers = async () => {
-    if (!isSuperAdmin) return;
-
     setLoadingUsers(true);
     try {
-      // Fetch all admin users
-      const { data: usersData } = await get('/admin/users');
-      const users = usersData.data.results || usersData.data || [];
-
-      // Fetch TOTP status for each user
-      const usersWithStatus = await Promise.all(
-        users.map(async (user: AdminUser) => {
-          try {
-            const { data: statusData } = await get(
-              `/admin-totp/totp/users/${user.id}/status`
-            );
-            return {
-              ...user,
-              totp_enabled: statusData.data.enabled,
-              totp_required: statusData.data.required,
-            };
-          } catch {
-            return user;
-          }
-        })
-      );
-
-      setAdminUsers(usersWithStatus);
+      // Fetch all admin users with their TOTP status from our plugin endpoint
+      const { data } = await get('/admin-totp/totp/users');
+      setAdminUsers(data.data || []);
     } catch (error) {
       toggleNotification({
         type: 'danger',
@@ -126,11 +126,15 @@ export const HomePage = () => {
   };
 
   useEffect(() => {
-    fetchStatus();
-    if (isSuperAdmin) {
-      fetchAdminUsers();
-    }
-  }, [isSuperAdmin]);
+    const init = async () => {
+      await fetchStatus();
+      const perms = await fetchPermissions();
+      if (perms?.canRead) {
+        await fetchAdminUsers();
+      }
+    };
+    init();
+  }, []);
 
   const handleBeginSetup = async () => {
     setSubmitting(true);
@@ -420,17 +424,19 @@ export const HomePage = () => {
                   </Td>
                   <Td>
                     <Flex gap={2}>
-                      <IconButton
-                        label={user.totp_required ? 'Make optional' : 'Make required'}
-                        onClick={() => {
-                          setSelectedUser(user);
-                          setIsRequireModalOpen(true);
-                        }}
-                        disabled={user.id === currentUser?.id}
-                      >
-                        <Lock />
-                      </IconButton>
-                      {user.totp_enabled && (
+                      {permissions.canRequire && (
+                        <IconButton
+                          label={user.totp_required ? 'Make optional' : 'Make required'}
+                          onClick={() => {
+                            setSelectedUser(user);
+                            setIsRequireModalOpen(true);
+                          }}
+                          disabled={user.id === currentUser?.id}
+                        >
+                          <Lock />
+                        </IconButton>
+                      )}
+                      {permissions.canReset && user.totp_enabled && (
                         <IconButton
                           label="Reset TOTP"
                           onClick={() => {
@@ -460,7 +466,7 @@ export const HomePage = () => {
         subtitle="Secure your account with an authenticator app"
       />
       <Layouts.Content>
-        {isSuperAdmin ? (
+        {permissions.canManageUsers ? (
           <Tabs.Root defaultValue="my-settings">
             <Tabs.List>
               <Tabs.Trigger value="my-settings">My Settings</Tabs.Trigger>
