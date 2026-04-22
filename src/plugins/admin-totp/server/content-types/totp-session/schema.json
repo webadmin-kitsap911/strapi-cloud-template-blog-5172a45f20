@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "totp_sessions",
+  "info": {
+    "singularName": "totp-session",
+    "pluralName": "totp-sessions",
+    "displayName": "TOTP Session"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": false
+    },
+    "content-type-builder": {
+      "visible": false
+    }
+  },
+  "attributes": {
+    "token": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "adminUserId": {
+      "type": "integer",
+      "required": true
+    },
+    "expiresAt": {
+      "type": "datetime",
+      "required": true
+    },
+    "attempts": {
+      "type": "integer",
+      "default": 0
+    },
+    "used": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

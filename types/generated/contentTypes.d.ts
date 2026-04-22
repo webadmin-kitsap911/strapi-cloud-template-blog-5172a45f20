@@ -1075,6 +1075,49 @@ export interface ApiTaxInfoRequestTaxInfoRequest
   };
 }
 
+export interface PluginAdminTotpTotpSession
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'totp_sessions';
+  info: {
+    displayName: 'TOTP Session';
+    pluralName: 'totp-sessions';
+    singularName: 'totp-session';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    adminUserId: Schema.Attribute.Integer & Schema.Attribute.Required;
+    attempts: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    expiresAt: Schema.Attribute.DateTime & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::admin-totp.totp-session'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    token: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    used: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -1752,6 +1795,7 @@ declare module '@strapi/strapi' {
       'api::staff-member.staff-member': ApiStaffMemberStaffMember;
       'api::staff-tag.staff-tag': ApiStaffTagStaffTag;
       'api::tax-info-request.tax-info-request': ApiTaxInfoRequestTaxInfoRequest;
+      'plugin::admin-totp.totp-session': PluginAdminTotpTotpSession;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

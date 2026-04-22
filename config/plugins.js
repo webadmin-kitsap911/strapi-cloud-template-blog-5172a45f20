@@ -1,4 +1,8 @@
 module.exports = () => ({
+  'admin-totp': {
+    enabled: true,
+    resolve: './src/plugins/admin-totp',
+  },
   navigation: {
     enabled: true,
     config: {

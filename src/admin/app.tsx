@@ -103,6 +103,208 @@ const customHtmlPreset = {
   },
 };
 
+// TOTP verification UI
+const showTotpVerificationUI = (session: {
+  totpSessionToken: string;
+  expiresAt: string;
+  user: { email: string };
+  needsSetup: boolean;
+}) => {
+  // Create overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'totp-verify-overlay';
+  overlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #f6f6f9;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `;
+
+  const content = session.needsSetup
+    ? `
+      <h2 style="margin: 0 0 16px 0; font-size: 24px; font-weight: 600;">Two-Factor Authentication Required</h2>
+      <p style="margin: 0 0 24px 0; color: #666;">
+        Your administrator requires you to set up two-factor authentication.
+        Please contact your administrator for assistance.
+      </p>
+      <button id="totp-cancel" style="
+        padding: 10px 20px;
+        border: 1px solid #ddd;
+        background: white;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+      ">Back to Login</button>
+    `
+    : `
+      <h2 style="margin: 0 0 8px 0; font-size: 24px; font-weight: 600;">Two-Factor Authentication</h2>
+      <p style="margin: 0 0 24px 0; color: #666;">Enter the code for ${session.user.email}</p>
+      <form id="totp-form">
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 4px; font-size: 14px; font-weight: 500;">
+            Verification Code
+          </label>
+          <input
+            type="text"
+            id="totp-code"
+            placeholder="Enter 6-digit code or backup code"
+            autocomplete="one-time-code"
+            autofocus
+            style="
+              width: 100%;
+              padding: 10px 12px;
+              border: 1px solid #ddd;
+              border-radius: 4px;
+              font-size: 16px;
+              box-sizing: border-box;
+            "
+          />
+          <p id="totp-hint" style="margin: 4px 0 0 0; font-size: 12px; color: #888;">
+            Enter the code from your authenticator app or a backup code
+          </p>
+          <p id="totp-error" style="margin: 4px 0 0 0; font-size: 12px; color: #d02b20; display: none;"></p>
+        </div>
+        <div style="display: flex; gap: 8px; justify-content: flex-end;">
+          <button type="button" id="totp-cancel" style="
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+          ">Cancel</button>
+          <button type="submit" id="totp-submit" style="
+            padding: 10px 20px;
+            border: none;
+            background: #4945ff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+          ">Verify</button>
+        </div>
+      </form>
+    `;
+
+  overlay.innerHTML = `
+    <div style="
+      background: white;
+      padding: 32px;
+      border-radius: 4px;
+      box-shadow: 0 1px 4px rgba(33, 33, 52, 0.1);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    ">
+      ${content}
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  // Handle cancel
+  document.getElementById('totp-cancel')?.addEventListener('click', () => {
+    sessionStorage.removeItem('totpSession');
+    overlay.remove();
+    window.location.href = '/admin/auth/login';
+  });
+
+  // Handle form submit
+  const form = document.getElementById('totp-form');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const codeInput = document.getElementById('totp-code') as HTMLInputElement;
+      const errorEl = document.getElementById('totp-error') as HTMLElement;
+      const submitBtn = document.getElementById('totp-submit') as HTMLButtonElement;
+
+      const code = codeInput?.value?.trim();
+      if (!code || code.length < 6) {
+        errorEl.textContent = 'Please enter a valid code';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Verifying...';
+      errorEl.style.display = 'none';
+
+      try {
+        const response = await fetch('/admin-totp/totp/verify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            totpSessionToken: session.totpSessionToken,
+            code,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data?.error?.message || 'Verification failed');
+        }
+
+        // Success - clear session and redirect
+        sessionStorage.removeItem('totpSession');
+        overlay.remove();
+
+        // The verify endpoint sets the refresh cookie, so just redirect
+        window.location.href = '/admin';
+      } catch (err: any) {
+        errorEl.textContent = err.message || 'Verification failed';
+        errorEl.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Verify';
+      }
+    });
+  }
+};
+
+// Install TOTP login interceptor
+const installTotpInterceptor = () => {
+  const originalFetch = window.fetch;
+  window.fetch = async (...args) => {
+    const response = await originalFetch(...args);
+
+    // Check if this is a login request
+    const url = typeof args[0] === 'string' ? args[0] : args[0]?.url;
+    if (url?.endsWith('/admin/login') && args[1]?.method?.toUpperCase() === 'POST') {
+      // Clone response to read body without consuming it
+      const clonedResponse = response.clone();
+      try {
+        const data = await clonedResponse.json();
+        if (data?.data?.requiresTOTP) {
+          // Store TOTP session data
+          const session = {
+            totpSessionToken: data.data.totpSessionToken,
+            expiresAt: data.data.expiresAt,
+            user: data.data.user,
+            needsSetup: data.data.needsSetup,
+          };
+          sessionStorage.setItem('totpSession', JSON.stringify(session));
+
+          // Show TOTP verification UI
+          showTotpVerificationUI(session);
+
+          // Return a promise that never resolves - this keeps Strapi's login
+          // handler waiting indefinitely while the user interacts with the TOTP overlay
+          return new Promise(() => {});
+        }
+      } catch (e) {
+        // Not JSON or other error, continue normally
+      }
+    }
+    return response;
+  };
+};
+
 export default {
   config: {
     locales: [],
@@ -117,5 +319,8 @@ export default {
       presets: [customHtmlPreset],
     });
   },
-  bootstrap() {},
+  bootstrap() {
+    // Install TOTP interceptor on app bootstrap
+    installTotpInterceptor();
+  },
 };

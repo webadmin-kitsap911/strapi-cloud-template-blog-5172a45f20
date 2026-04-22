@@ -1,0 +1,32 @@
+{
+  "name": "admin-totp",
+  "version": "1.0.0",
+  "description": "TOTP two-factor authentication for Strapi admin panel",
+  "strapi": {
+    "name": "admin-totp",
+    "description": "TOTP two-factor authentication for admin users",
+    "kind": "plugin",
+    "displayName": "Admin TOTP"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "@strapi/strapi": "^5.0.0"
+  },
+  "author": "Kitsap 911",
+  "license": "MIT",
+  "exports": {
+    "./strapi-admin": {
+      "types": "./admin/src/index.ts",
+      "source": "./admin/src/index.ts",
+      "import": "./admin/src/index.ts",
+      "require": "./admin/src/index.ts",
+      "default": "./admin/src/index.ts"
+    },
+    "./strapi-server": {
+      "source": "./server/index.js",
+      "require": "./server/index.js",
+      "default": "./server/index.js"
+    },
+    "./package.json": "./package.json"
+  }
+}
