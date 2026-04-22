@@ -21,7 +21,7 @@ const verifyToken = (secret, token) => {
 };
 
 const generateQRCode = async (secret, email) => {
-  const otpauth = otplib.generateURI({ secret, accountName: email, issuer: ISSUER });
+  const otpauth = otplib.generateURI({ secret, label: email, issuer: ISSUER });
   return QRCode.toDataURL(otpauth);
 };
 
