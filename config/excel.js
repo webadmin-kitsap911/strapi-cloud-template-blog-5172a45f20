@@ -1,9 +1,9 @@
 module.exports = {
   config: {
-    'api::contact-submission': {
+    'api::contact-submission.contact-submission': {
       columns: ['id', 'name', 'email', 'subject', 'message', 'createdAt'],
     },
-    'api::public-records-request': {
+    'api::public-records-request.public-records-request': {
       columns: [
         'id',
         'isMemberAgency',
@@ -20,7 +20,7 @@ module.exports = {
         'createdAt',
       ],
     },
-    'api::tax-info-request': {
+    'api::tax-info-request.tax-info-request': {
       columns: [
         'id',
         'name',
