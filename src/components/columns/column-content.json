@@ -20,7 +20,8 @@
         "blocks.group-members",
         "blocks.contact-form",
         "blocks.next-meeting",
-        "blocks.resource-links"
+        "blocks.resource-links",
+        "blocks.contacts"
       ]
     }
   }

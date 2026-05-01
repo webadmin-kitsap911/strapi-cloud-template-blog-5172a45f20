@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_blocks_contacts",
+  "info": {
+    "displayName": "Contacts",
+    "description": "Display selected staff members as contact cards",
+    "icon": "user"
+  },
+  "options": {},
+  "attributes": {
+    "contacts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::staff-member.staff-member",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Select one or more staff members to display"
+        }
+      }
+    },
+    "theme": {
+      "type": "enumeration",
+      "required": true,
+      "enum": ["none", "standard", "brighter", "darker", "inherit"],
+      "default": "standard"
+    }
+  }
+}

@@ -108,6 +108,31 @@ export interface BlocksContactForm extends Struct.ComponentSchema {
   };
 }
 
+export interface BlocksContacts extends Struct.ComponentSchema {
+  collectionName: 'components_blocks_contacts';
+  info: {
+    description: 'Display selected staff members as contact cards';
+    displayName: 'Contacts';
+    icon: 'user';
+  };
+  attributes: {
+    contacts: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::staff-member.staff-member'
+    > &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Select one or more staff members to display';
+        };
+      }>;
+    theme: Schema.Attribute.Enumeration<
+      ['none', 'standard', 'brighter', 'darker', 'inherit']
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'standard'>;
+  };
+}
+
 export interface BlocksContractOpportunities extends Struct.ComponentSchema {
   collectionName: 'components_blocks_contract_opportunities';
   info: {
@@ -567,6 +592,7 @@ export interface ColumnsColumnContent extends Struct.ComponentSchema {
         'blocks.contact-form',
         'blocks.next-meeting',
         'blocks.resource-links',
+        'blocks.contacts',
       ]
     >;
   };
@@ -850,6 +876,7 @@ declare module '@strapi/strapi' {
       'blocks.call-to-action': BlocksCallToAction;
       'blocks.columns': BlocksColumns;
       'blocks.contact-form': BlocksContactForm;
+      'blocks.contacts': BlocksContacts;
       'blocks.contract-opportunities': BlocksContractOpportunities;
       'blocks.embed': BlocksEmbed;
       'blocks.group-members': BlocksGroupMembers;
