@@ -995,6 +995,7 @@ export interface ApiStaffMemberStaffMember extends Struct.CollectionTypeSchema {
     phone: Schema.Attribute.String;
     photo: Schema.Attribute.Media<'images'>;
     publishedAt: Schema.Attribute.DateTime;
+    sortWeight: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     tags: Schema.Attribute.Relation<'manyToMany', 'api::staff-tag.staff-tag'>;
     titles: Schema.Attribute.Component<'staff.title', true>;
     updatedAt: Schema.Attribute.DateTime;

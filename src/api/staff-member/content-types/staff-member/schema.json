@@ -38,6 +38,10 @@
       "relation": "manyToMany",
       "target": "api::staff-tag.staff-tag",
       "inversedBy": "staffMembers"
+    },
+    "sortWeight": {
+      "type": "integer",
+      "default": 0
     }
   }
 }
