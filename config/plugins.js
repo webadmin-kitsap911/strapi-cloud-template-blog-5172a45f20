@@ -3,6 +3,9 @@ module.exports = () => ({
     enabled: true,
     resolve: './src/plugins/admin-totp',
   },
+  'csv-export': {
+    enabled: true,
+  },
   navigation: {
     enabled: true,
     config: {

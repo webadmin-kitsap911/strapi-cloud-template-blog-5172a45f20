@@ -35,6 +35,7 @@
     "react-router-dom": "^6.0.0",
     "strapi-plugin-navigation": "^3.3.6",
     "strapi-plugin-strapi-algolia": "^2.0.0",
+    "strapi5-plugin-csv-export": "^5.0.1",
     "styled-components": "^6.0.0"
   },
   "devDependencies": {
