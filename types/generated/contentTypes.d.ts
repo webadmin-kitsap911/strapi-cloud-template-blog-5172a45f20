@@ -662,6 +662,24 @@ export interface ApiGlobalSettingsGlobalSettings
       Schema.Attribute.Private;
     defaultMeetingUrl: Schema.Attribute.String;
     defaultPageBackgroundImage: Schema.Attribute.Media<'images'>;
+    footerText: Schema.Attribute.RichText &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Text displayed in the footer';
+        };
+      }>;
+    headerContacts: Schema.Attribute.Component<'shared.header-contact', true> &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Contact lines displayed in the header (max 2)';
+        };
+      }> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 2;
+        },
+        number
+      >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',

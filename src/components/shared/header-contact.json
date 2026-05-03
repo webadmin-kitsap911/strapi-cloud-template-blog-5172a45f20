@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_shared_header_contacts",
+  "info": {
+    "displayName": "Header Contact",
+    "description": "A contact line for the header (label + phone number)"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "maxLength": 27,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Label for this contact line (max 27 characters)"
+        }
+      }
+    },
+    "phoneNumber": {
+      "type": "string",
+      "required": true,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Phone number to display"
+        }
+      }
+    }
+  }
+}

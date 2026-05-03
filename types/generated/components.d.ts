@@ -707,6 +707,33 @@ export interface SharedDocumentAttachment extends Struct.ComponentSchema {
   };
 }
 
+export interface SharedHeaderContact extends Struct.ComponentSchema {
+  collectionName: 'components_shared_header_contacts';
+  info: {
+    description: 'A contact line for the header (label + phone number)';
+    displayName: 'Header Contact';
+  };
+  attributes: {
+    label: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Label for this contact line (max 27 characters)';
+        };
+      }> &
+      Schema.Attribute.SetMinMaxLength<{
+        maxLength: 27;
+      }>;
+    phoneNumber: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        'content-manager': {
+          description: 'Phone number to display';
+        };
+      }>;
+  };
+}
+
 export interface SharedIncident extends Struct.ComponentSchema {
   collectionName: 'components_shared_incidents';
   info: {
@@ -896,6 +923,7 @@ declare module '@strapi/strapi' {
       'home.stat-item': HomeStatItem;
       'home.stats-section': HomeStatsSection;
       'shared.document-attachment': SharedDocumentAttachment;
+      'shared.header-contact': SharedHeaderContact;
       'shared.incident': SharedIncident;
       'shared.link': SharedLink;
       'shared.officer': SharedOfficer;

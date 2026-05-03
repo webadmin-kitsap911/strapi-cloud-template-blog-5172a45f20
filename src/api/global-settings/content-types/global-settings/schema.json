@@ -41,6 +41,25 @@
       "multiple": false,
       "required": false,
       "allowedTypes": ["images"]
+    },
+    "headerContacts": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.header-contact",
+      "max": 2,
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Contact lines displayed in the header (max 2)"
+        }
+      }
+    },
+    "footerText": {
+      "type": "richtext",
+      "pluginOptions": {
+        "content-manager": {
+          "description": "Text displayed in the footer"
+        }
+      }
     }
   }
 }
