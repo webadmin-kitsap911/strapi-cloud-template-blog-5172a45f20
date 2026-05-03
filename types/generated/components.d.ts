@@ -99,6 +99,7 @@ export interface BlocksContactForm extends Struct.ComponentSchema {
   };
   attributes: {
     description: Schema.Attribute.Text;
+    overrideEmail: Schema.Attribute.Email;
     theme: Schema.Attribute.Enumeration<
       ['none', 'standard', 'brighter', 'darker', 'inherit']
     > &
