@@ -1,7 +1,4 @@
 module.exports = () => ({
-  email: {
-    enabled: false,
-  },
   'admin-totp': {
     enabled: true,
     resolve: './src/plugins/admin-totp',
