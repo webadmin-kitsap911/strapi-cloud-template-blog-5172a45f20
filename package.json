@@ -20,9 +20,9 @@
   "dependencies": {
     "@_sh/strapi-plugin-ckeditor": "^7.0.0",
     "@kitsap-911/strapi-private-file-upload": "github:kitsap-911/strapi-private-file-upload",
-    "@strapi/plugin-cloud": "5.47.1",
-    "@strapi/plugin-users-permissions": "5.47.1",
-    "@strapi/strapi": "5.47.1",
+    "@strapi/plugin-cloud": "5.43.0",
+    "@strapi/plugin-users-permissions": "5.43.0",
+    "@strapi/strapi": "5.43.0",
     "algoliasearch": "^5.50.2",
     "better-sqlite3": "11.3.0",
     "esbuild": "0.25.12",
