@@ -119,6 +119,11 @@ const customHtmlPreset = {
         { name: "Step-by-Step Description", element: "div", classes: ["step-by-step__item-description"] },
         { name: "Step-by-Step Options", element: "ul", classes: ["step-by-step__option-container"] },
         { name: "Step-by-Step Option", element: "li", classes: ["step-by-step__option"] },
+        // Frost effect styles
+        { name: "Frost (Flat)", element: "div", classes: ["frost", "frost-flat"] },
+        { name: "Frost (Subtle)", element: "div", classes: ["frost", "frost-subtle"] },
+        { name: "Frost (Standard)", element: "div", classes: ["frost", "frost-standard"] },
+        { name: "Frost (High)", element: "div", classes: ["frost", "frost-high"] },
       ],
     },
     // Allow block structure via General HTML Support
@@ -126,7 +131,7 @@ const customHtmlPreset = {
       allow: [
         {
           name: "div",
-          classes: /^(admonition__|step-by-step__)/,
+          classes: /^(admonition__|step-by-step__|frost|effect--frosted-glass|effect-mode--)/,
         },
         {
           name: "a",
