@@ -163,6 +163,10 @@ const customHtmlPreset = {
           name: "p",
           classes: /^step-by-step__/,
         },
+        {
+          name: /.*/,
+          classes: /^reporting-agencies/,
+        },
       ],
     },
   },
