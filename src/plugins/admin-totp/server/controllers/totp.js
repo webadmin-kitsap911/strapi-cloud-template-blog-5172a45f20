@@ -8,6 +8,7 @@ module.exports = ({ strapi }) => ({
       return ctx.badRequest('Missing totpSessionToken or code');
     }
 
+    try {
     const sessionService = strapi.plugin('admin-totp').service('session');
     const totpService = strapi.plugin('admin-totp').service('totp');
 
@@ -106,6 +107,12 @@ module.exports = ({ strapi }) => ({
         user: strapi.admin.services.user.sanitizeUser(user),
       },
     };
+    } catch (error) {
+      strapi.log.error(
+        `[admin-totp] TOTP verify failed: ${error.message}\n${error.stack}`
+      );
+      return ctx.internalServerError('TOTP verification failed');
+    }
   },
 
   // Setup TOTP using session token (for users who need to set up TOTP before first login)
