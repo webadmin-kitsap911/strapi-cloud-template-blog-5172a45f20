@@ -130,7 +130,11 @@ build
 .strapi-updater.json
 .strapi-cloud.json
 
-.envrc
+############################
+# direnv / Nix
+############################
+
+.direnv/
 
 ############################
 # Claude
