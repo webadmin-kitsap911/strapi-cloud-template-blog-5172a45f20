@@ -11,6 +11,8 @@
     "develop": "strapi develop",
     "develop:clean": "npm run clean && strapi develop",
     "seed:example": "node ./scripts/seed.js",
+    "backup": "bash ./scripts/backup-from-cloud.sh",
+    "restore": "bash ./scripts/restore-backup.sh",
     "import:staff-members": "tsx scripts/import-staff-members.ts",
     "import:awards": "tsx scripts/import-awards.ts",
     "start": "strapi start",

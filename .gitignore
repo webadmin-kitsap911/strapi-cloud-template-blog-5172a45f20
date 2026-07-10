@@ -129,6 +129,8 @@ dist
 build
 .strapi-updater.json
 .strapi-cloud.json
+backups
+backups/**
 
 ############################
 # direnv / Nix
@@ -142,3 +144,4 @@ build
 
 .claude/
 CLAUDE.md
+
